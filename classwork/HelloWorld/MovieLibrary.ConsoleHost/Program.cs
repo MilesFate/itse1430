@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Luisalberto Castaneda
+// ITSE 1450
+// Movie Libary
+using System;
 
 namespace MovieLibrary.ConsoleHost
 {
