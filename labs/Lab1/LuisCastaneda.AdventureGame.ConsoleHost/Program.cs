@@ -13,7 +13,20 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
         static void Main(string[] args)
         {
             introduction();
-
+            bool exit = false;
+            while (exit == false)
+            {
+                string choice = promptUserInput();
+                switch (choice)
+                {
+                    case "room 1": room1(); break;
+                    case "room 2": room2(); break;
+                    case "room 3": room3(); break;
+                    case "room 4": room4(); break;
+                    case "quit": exit = true; break;
+                    default: Console.WriteLine("nopey"); break;
+                }
+            }
         }
 
         private static void introduction ()
@@ -29,10 +42,43 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
 
         private static string promptUserInput ()
         {
-            Console.WriteLine("Prompt User");
-            string userinput = Console.ReadLine();
 
-            return userinput;
+            do
+            {
+                Console.WriteLine("Prompt user");
+
+                string userinput = Console.ReadLine().ToLower();
+
+                if (userinput == "room 1")
+                    return "room 1";
+                else if (userinput == "room 2")
+                    return "room 2";
+                else if (userinput == "room 3")
+                    return "room 3";
+                else if (userinput == "room 4")
+                    return "room 4";
+                else if (userinput == "room 5")
+                    return "room 5";
+                else if (userinput == "room 6")
+                    return "room 6";
+                else if (userinput == "room 7")
+                    return "room 7";
+                else if (userinput == "room 8")
+                    return "room 8";
+                else if (userinput == "room 9")
+                    return "room 9";
+               
+                HandleError("Please try again");
+            } while (true);
+        }
+
+        private static void HandleError ( string message )
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+
+
         }
 
         private static void room1 ()
@@ -42,7 +88,6 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void room2 ()
@@ -52,7 +97,6 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void room3 ()
@@ -62,7 +106,6 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void room4 ()
@@ -72,7 +115,6 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void room5 ()
@@ -82,7 +124,6 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void room6 ()
@@ -92,7 +133,6 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void room7 ()
@@ -102,7 +142,6 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void room8 ()
@@ -112,7 +151,6 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void room9 ()
@@ -122,12 +160,14 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             Console.Write("Sentence 2");
             Console.Write("Sentence 3");
             Console.WriteLine("Sentence 4");
-            promptUserInput();
         }
 
         private static void help ()
         {
-            promptUserInput();
+            Console.WriteLine(" ");
+            Console.Write("Sentence 1");
+            Console.Write("Sentence 2");
+            Console.Write("Sentence 3");
         }
     }
 }
