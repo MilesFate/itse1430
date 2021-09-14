@@ -14,7 +14,7 @@ namespace MovieLibrary.ConsoleHost
             do
             {
                 char choice = GetInput();
-                if (choice == 'Q')
+                /*if (choice == 'Q')
                     done = HandleQuit();
                 else if (choice == 'A')
                     AddMovie();
@@ -24,6 +24,15 @@ namespace MovieLibrary.ConsoleHost
                     DeleteMovie();
                 else
                     Console.WriteLine("Unknown Option");
+                */
+                switch(choice)
+                {
+                    case 'Q': done = HandleQuit(); break;
+                    case 'A': AddMovie(); break;
+                    case 'V': ViewMovie(); break;
+                    case 'D': DeleteMovie(); break;
+                    default: DisplayError("Unknown Option"); break;
+                };
                 
             } while (!done);
         }
@@ -34,7 +43,7 @@ namespace MovieLibrary.ConsoleHost
             if (!ReadBoolean("Are you sure (Y/N)? "))
                 return;
 
-            //TODO: Delete Movie
+            // TODO: Delete Movie
             Console.WriteLine("Not implemented");
         }
 
@@ -103,8 +112,7 @@ namespace MovieLibrary.ConsoleHost
 
                 string input = Console.ReadLine();
                 return input;
-            } while (true);
-            
+            } while (true);          
         }
 
         static void DisplayError(string message)
@@ -133,8 +141,7 @@ namespace MovieLibrary.ConsoleHost
                     return true;
                 else if (input.Key == ConsoleKey.N)
                     return false;
-
-                
+ 
             } while (true);
 
             // not needed anymore
@@ -154,7 +161,7 @@ namespace MovieLibrary.ConsoleHost
             while (true)
             {
                 string input = Console.ReadLine();
-                if (input == "Q")
+               /* if (input == "Q")
                     return 'Q';
                 else if (input == "A")
                     return 'A';
@@ -162,6 +169,27 @@ namespace MovieLibrary.ConsoleHost
                     return 'V';
                 else if (input == "D")
                     return 'D';
+               */
+               switch(input)
+                {
+                    // No fallthough , unless case statement empty
+                    // must end in break or return
+                    case "c":
+                    case "C": return 'B';
+                    case "q":
+                    case "Q": return 'Q';
+
+                    case "a":
+                    case "A": return 'A';
+
+                    case "v":
+                    case "V": return 'V';
+
+                    case "d":
+                    case "D": return 'D';
+                    // default:;
+                };
+
                 DisplayError("invalid input");
             }
             // return default(char);
