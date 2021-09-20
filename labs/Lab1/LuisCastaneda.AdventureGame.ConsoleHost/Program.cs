@@ -10,16 +10,8 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
 {
     internal class Program
     {
-        static string s_direction;
-        public static int s_positionX = 0;
-        public static int s_positionY = 0;
-        private static readonly int s_roomNumber;
-
-        /* TODO: 
-         * if(input == "up)
-         *      if(roomNum == 1)
-         *          error
-         */
+        static string s_direction;        
+        public static int s_roomNumber = 1;
 
         private static void Main()
         {
@@ -32,12 +24,13 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
                 {
                     case "MOVE":
                     {
-                        s_direction = DirectionAcquisition("Which direction do you want to move? ");
-                        MovePlayer(s_direction);
+                        s_roomNumber = DirectionAcquisition("Which direction do you want to move? ");
                         SetRoom(s_roomNumber);
                         break;
                     }
+                    case "EXAMINE": SetRoom(s_roomNumber); break;
                     case "QUIT": exit = HandleExit(); break;
+                    default : HandleError("invalid input"); break;
                 }
             } while (!exit);
         }
@@ -46,6 +39,7 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
         {
             switch (s_roomNumber)
             {
+                case 0: HandleError("invalid input"); break;
                 case 1: room1(); break;
                 case 2: room2(); break;
                 case 3: room3(); break;
@@ -88,43 +82,114 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
             } while (true);
         }
 
-        private static string DirectionAcquisition ( string message )
+        private static int DirectionAcquisition ( string message )
+        {
+            
+            do
+            {
+                Console.Write(message);
+                s_direction = Console.ReadLine().Trim().ToUpper();
+
+                switch(s_direction)
+                {
+                    case "UP" : return HandleUp();
+                    case "DOWN": return HandleDown();
+                    case "LEFT": return HandleLeft();
+                    case "RIGHT": return HandleRight();
+                    default : HandleError("Invalid Input"); break;
+                }
+            } while (true);
+            //return s_roomNumber = 1;
+
+            
+        }
+
+        private static int HandleUp ()
         {
             do
             {
-                int newX , newY ;
-                Console.Write(message);
-
-                do
-                {
-                    newX = s_positionX;
-                    newY = s_positionY;
-                    s_direction = Console.ReadLine().Trim().ToUpper();
-                    
-                    if (s_direction == "UP" && -- newY < -2)
-                        HandleError("Invalid Input");
-                    else if (s_direction == "DOWN" && ++ newY > 0)
-                        HandleError("Invalid Input");
-                    else if (s_direction == "RIGHT" && ++ newX > 2)
-                        HandleError("Invalid Input");
-                    else if (s_direction == "LEFT" && -- newX < 0)
-                        HandleError("Invalid Input");
-                } while (newY < -2 || newY > 0 || newX < 0 || newX > 2);
-                return s_direction;
+                if (s_roomNumber == 1 || s_roomNumber == 2 || s_roomNumber == 3)
+                    return s_roomNumber = 0;
+                else if (s_roomNumber == 4)
+                    return s_roomNumber = 1;
+                else if (s_roomNumber == 5)
+                    return s_roomNumber = 2;
+                else if (s_roomNumber == 6)
+                    return s_roomNumber = 3;
+                else if (s_roomNumber == 7)
+                    return s_roomNumber = 4;
+                else if (s_roomNumber == 8)
+                    return s_roomNumber = 5;
+                else if (s_roomNumber == 9)
+                    return s_roomNumber = 6;
 
             } while (true);
         }
 
-        static void MovePlayer ( string s_direction )
+        private static int HandleDown ()
         {
-            switch (s_direction)
+            do
             {
-                case "UP": s_positionY += 1; break;
-                case "DOWN": s_positionY -= 1; break;
-                case "LEFT": s_positionX -= 1; break;
-                case "RIGHT": s_positionX += 1; break;
-                default: HandleError("Invalid Input"); break;
-            }
+                if (s_roomNumber == 7 || s_roomNumber == 8 || s_roomNumber == 9)
+                    return s_roomNumber = 0;
+                else if (s_roomNumber == 1)
+                    return s_roomNumber = 4;
+                else if (s_roomNumber == 2)
+                    return s_roomNumber = 5;
+                else if (s_roomNumber == 3)
+                    return s_roomNumber = 6;
+                else if (s_roomNumber == 4)
+                    return s_roomNumber = 7;
+                else if (s_roomNumber == 5)
+                    return s_roomNumber = 8;
+                else if (s_roomNumber == 6)
+                    return s_roomNumber = 9;
+
+            } while (true);
+        }
+
+        private static int HandleLeft ()
+        {
+            do
+            {
+                if (s_roomNumber == 3 || s_roomNumber == 6 || s_roomNumber == 9)
+                    return s_roomNumber = 0;
+                else if (s_roomNumber == 1)
+                    return s_roomNumber = 2;
+                else if (s_roomNumber == 2)
+                    return s_roomNumber = 3;
+                else if (s_roomNumber == 4)
+                    return s_roomNumber = 5;
+                else if (s_roomNumber == 5)
+                    return s_roomNumber = 6;
+                else if (s_roomNumber == 7)
+                    return s_roomNumber = 8;
+                else if (s_roomNumber == 8)
+                    return s_roomNumber = 9;
+
+            } while (true);
+        }
+
+        private static int HandleRight ()
+        {
+            do
+            {
+                if (s_roomNumber == 1 || s_roomNumber == 4 || s_roomNumber == 7)
+                    return s_roomNumber = 0;
+                else if (s_roomNumber == 2)
+                    return s_roomNumber = 1;
+                else if (s_roomNumber == 3)
+                    return s_roomNumber = 2;
+                else if (s_roomNumber == 5)
+                    return s_roomNumber = 4;
+                else if (s_roomNumber == 6)
+                    return s_roomNumber = 5;
+                else if (s_roomNumber == 8)
+                    return s_roomNumber = 7;
+                else if (s_roomNumber == 9)
+                    return s_roomNumber = 8;
+
+            } while (true);
         }
 
         private static void HandleError ( string message )
@@ -229,6 +294,7 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
         private static void help ()
         {
             Console.WriteLine("Valid Move inputs : Right | Left | Forward | Backward");
+            Console.WriteLine("Examine :: ReShows what room your in");
             Console.WriteLine("Help :: Get Help");
             Console.WriteLine("Quit :: Quit the Program");
         }
