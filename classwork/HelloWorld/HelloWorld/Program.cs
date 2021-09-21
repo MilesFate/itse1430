@@ -4,6 +4,7 @@
  * ITSE 1430 Fall 2021
  */
 using System;
+using System.Text;
 
 namespace HelloWorld
 {
@@ -60,29 +61,29 @@ namespace HelloWorld
             {
                 int x = 10, y;
 
-                // Prefix Increment
-                //  1. Take current value of x and increment by 1
-                //  2. Store new value back to x
-                //  3. Expression value is current of x
-                y = ++x; // x = 11, y = 11
+                //Prefix increment
+                //   1. Take current value of X and increment by 1
+                //   2. Store new value back in X
+                //   3. Expression value is current value of X
+                y = ++x;  //x = 11, y = 11
 
-                // Prefix decrement
-                //  1. Take current value of x and decrement by 1
-                //  2. Store new value back to x
-                //  3. Expression value is current of x
-                y = --x; // x = 10 , y = 10
+                //Prefix decrement
+                //   1. Take current value of X and decrement by 1
+                //   2. Store new value back in X
+                //   3. Expression value is current value of X
+                y = --x;  //x = 10, y = 10
 
-                // Postfix Increment
-                //  1. Take current value of x and increment by 1
-                //  2. Store new value back to x
-                //  3. Expression value is current of temp (orginal value of x)
-                y = x++;
+                //Postfix increment
+                //   1. Store current value of X in Tmp
+                //   2. Increment X by one and store back in X
+                //   3. Expression value is Tmp (original value of X)
+                y = x++;  //x = 11, y = 10
 
-                // Postfix Decrement
-                //  1. Take current value of x and Decrement by 1
-                //  2. Store new value back to x
-                //  3. Expression value is current of temp (orginal value of x)
-                y = x--;
+                //Postfix decrement
+                //   1. Store current value of X in Tmp
+                //   2. Decrement X by one and store back in X
+                //   3. Expression value is Tmp (original value of X)
+                y = x--;  //x = 10, y = 11
             }
 
             static void DemoAssignmentOperator ()
@@ -157,6 +158,80 @@ namespace HelloWorld
                 string asString = length.ToString(); // legnth as a string
                 asString = 10.ToString(); // "10"
                 asString = areEqualNull.ToString(); // "False"
+
+                // Comparison
+                string value1 = "Hello", value2 = "hello";
+                bool areEqual = value1 == value2;
+                bool compareCaseSensitive = String.Compare(value1, value2) == 0;
+                bool compareCaseInsensitive = String.Compare(value1, value2, true) == 0; // Preferred
+
+                compareCaseSensitive = value1.CompareTo(value2) == 0; // works but not safe
+
+                string lowerValue1 = value1.ToLower();
+                string upperValue1 =  value2.ToUpper();
+                compareCaseInsensitive = value1.ToUpper() == value2.ToUpper();
+
+                // Concatenation : first last year
+                int year = 2021;
+                firstName = "Rat";
+                string lastName = "Irl";
+                string name = firstName + " " + lastName + " " + year; // Rat Irl
+                name = string.Concat(firstName," ",lastName, " ",year);  // for larger # of strings
+                
+                var builder = new StringBuilder();
+                builder.Append(firstName);
+                builder.Append(" ");
+                builder.Append(lastName);
+                builder.Append(" ");
+                builder.Append(year);
+                name = builder.ToString();
+
+                name = String.Join(" ", firstName, lastName, year);
+
+                // Misc
+                bool startWithB = name.StartsWith("B");
+                startWithB = name.StartsWith("B",StringComparison.CurrentCultureIgnoreCase);
+
+                bool endsWith9 = name.EndsWith("9");
+                endsWith9 = name.EndsWith("9", StringComparison.CurrentCultureIgnoreCase);
+
+                // removes leading and trailing whitespace
+                string normalizedName = name.Trim();
+                //name.TrimStart().TrimEnd();
+
+                // Some useful stuff
+                //name.Substring(startIndex); // gets a subset of string
+                //name.IndexOf(character); // finds a character
+
+                name = name.PadLeft(50); // will add enough spaces on left to make string legnth 50
+                name = name.PadRight(50); // will add enough spaces on right to make string legnth 50
+
+                // empty string checking
+                bool isempty;
+                isempty = name == ""; // not always going to work correctly
+                isempty = name.Length == 0; //will crash if null
+
+                //handle null
+                isempty = (name != null) ? name == "" : true;
+                isempty = name == null || name == "";
+                isempty = (name != null) ? name.Length == 0 : true;
+                isempty = String.IsNullOrEmpty(name); // preferred
+
+
+                // Formatting - Hello first last , the year is year
+                name  = "Hello "+firstName + " "+ lastName+", the year is "+ year +".";
+                name = String.Format("Hello {0} {1} , the year is {2}.",firstName,lastName,year);
+                Console.WriteLine("Hello {0} {1} , the year is {2}.", firstName, lastName, year);
+
+                decimal price = 8.75M;
+                string priceString = price.ToString(); // 8.750000
+                priceString = price.ToString("C"); // money 8.75
+                priceString = price.ToString("N6:N2"); // 8.7500
+                priceString = String.Format("{0:c}", price);
+
+                // String interpolation - way to go (because name is fancy)
+                name = $"Hello {firstName} {lastName} , the year is {year:0000}.";
+
             }
         } // do not pass go
     }
