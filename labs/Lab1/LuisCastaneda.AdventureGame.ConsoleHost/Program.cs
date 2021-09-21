@@ -108,20 +108,16 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
         {
             do
             {
-                if (s_roomNumber == 1 || s_roomNumber == 2 || s_roomNumber == 3)
-                    return s_roomNumber = 0;
-                else if (s_roomNumber == 4)
-                    return s_roomNumber = 1;
-                else if (s_roomNumber == 5)
-                    return s_roomNumber = 2;
-                else if (s_roomNumber == 6)
-                    return s_roomNumber = 3;
-                else if (s_roomNumber == 7)
-                    return s_roomNumber = 4;
-                else if (s_roomNumber == 8)
-                    return s_roomNumber = 5;
-                else if (s_roomNumber == 9)
-                    return s_roomNumber = 6;
+                switch (s_roomNumber)
+                {
+                    case 4 : return s_roomNumber = 1;
+                    case 5 : return s_roomNumber = 2;
+                    case 6 : return s_roomNumber = 3;
+                    case 7 : return s_roomNumber = 4;
+                    case 8 : return s_roomNumber = 5;
+                    case 9 : return s_roomNumber = 6;
+                    default: HandleError("invalid input"); return s_roomNumber;
+                }
 
             } while (true);
         }
@@ -130,20 +126,16 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
         {
             do
             {
-                if (s_roomNumber == 7 || s_roomNumber == 8 || s_roomNumber == 9)
-                    return s_roomNumber = 0;
-                else if (s_roomNumber == 1)
-                    return s_roomNumber = 4;
-                else if (s_roomNumber == 2)
-                    return s_roomNumber = 5;
-                else if (s_roomNumber == 3)
-                    return s_roomNumber = 6;
-                else if (s_roomNumber == 4)
-                    return s_roomNumber = 7;
-                else if (s_roomNumber == 5)
-                    return s_roomNumber = 8;
-                else if (s_roomNumber == 6)
-                    return s_roomNumber = 9;
+                switch (s_roomNumber)
+                {
+                    case 1: return s_roomNumber = 4;
+                    case 2: return s_roomNumber = 5;
+                    case 3: return s_roomNumber = 6;
+                    case 4: return s_roomNumber = 7;
+                    case 5: return s_roomNumber = 8;
+                    case 6: return s_roomNumber = 9;
+                    default: HandleError("invalid input"); return s_roomNumber;
+                }
 
             } while (true);
         }
@@ -152,20 +144,16 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
         {
             do
             {
-                if (s_roomNumber == 3 || s_roomNumber == 6 || s_roomNumber == 9)
-                    return s_roomNumber = 0;
-                else if (s_roomNumber == 1)
-                    return s_roomNumber = 2;
-                else if (s_roomNumber == 2)
-                    return s_roomNumber = 3;
-                else if (s_roomNumber == 4)
-                    return s_roomNumber = 5;
-                else if (s_roomNumber == 5)
-                    return s_roomNumber = 6;
-                else if (s_roomNumber == 7)
-                    return s_roomNumber = 8;
-                else if (s_roomNumber == 8)
-                    return s_roomNumber = 9;
+                switch (s_roomNumber)
+                {
+                    case 2: return s_roomNumber = 1;
+                    case 3: return s_roomNumber = 2;
+                    case 5: return s_roomNumber = 4;
+                    case 6: return s_roomNumber = 5;
+                    case 8: return s_roomNumber = 7;
+                    case 9: return s_roomNumber = 8;
+                    default: HandleError("invalid input"); return s_roomNumber;
+                }
 
             } while (true);
         }
@@ -174,20 +162,16 @@ namespace LuisCastaneda.AdventureGame.ConsoleHost
         {
             do
             {
-                if (s_roomNumber == 1 || s_roomNumber == 4 || s_roomNumber == 7)
-                    return s_roomNumber = 0;
-                else if (s_roomNumber == 2)
-                    return s_roomNumber = 1;
-                else if (s_roomNumber == 3)
-                    return s_roomNumber = 2;
-                else if (s_roomNumber == 5)
-                    return s_roomNumber = 4;
-                else if (s_roomNumber == 6)
-                    return s_roomNumber = 5;
-                else if (s_roomNumber == 8)
-                    return s_roomNumber = 7;
-                else if (s_roomNumber == 9)
-                    return s_roomNumber = 8;
+                switch (s_roomNumber)
+                {
+                    case 1: return s_roomNumber = 2;
+                    case 2: return s_roomNumber = 3;
+                    case 4: return s_roomNumber = 5;
+                    case 5: return s_roomNumber = 6;
+                    case 7: return s_roomNumber = 8;
+                    case 8: return s_roomNumber = 9;
+                    default: HandleError("invalid input"); return s_roomNumber;
+                }
 
             } while (true);
         }
