@@ -37,22 +37,28 @@ namespace MovieLibrary.ConsoleHost
             } while (!done);
         }
 
-        static Movie movie = new Movie();
+        static Movie movie;// = new Movie();
 
         private static void DeleteMovie ()
         {
+            if (movie == null)
+                return;
+
+            //var newMovie = movie.Copy();
             // Confirm
             if (!ReadBoolean("Are you sure (Y/N)? "))
                 return;
 
             // TODO: Delete Movie
-            movie.title = null;
+            movie = null;
         }
 
         static void ViewMovie()
         {
+
             // TODO: what if they haven't added one yet?
-            if (String.IsNullOrEmpty(movie.title))
+            //if (String.IsNullOrEmpty(movie.title))
+            if (movie == null)
             {
                 Console.WriteLine("No movie available");
                 return;
@@ -67,17 +73,34 @@ namespace MovieLibrary.ConsoleHost
 
         private static void AddMovie ()
         {
-            movie.title = ReadString("Enter the movie title: ",true); // requires
-            movie.description = ReadString("Enter the optional description: ",false); // optional
+            do
+            {
+                var newMovie = new Movie();
+                newMovie.title = ReadString("Enter the movie title: ", true); // requires
+                newMovie.description = ReadString("Enter the optional description: ", false); // optional
 
-            movie.runLength = ReadInt32("Enter Run Length (in Minutes): ",0); // optional, in minutes, >=0
-            movie.releaseYear = ReadInt32("Enter the release year (min 1900): ",1900); // 1900+
+                newMovie.runLength = ReadInt32("Enter Run Length (in Minutes): ", 0); // optional, in minutes, >=0
+                newMovie.releaseYear = ReadInt32("Enter the release year (min 1900): ", newMovie.MinimumreleaseYear); // 1900+
 
-            // double reviewRating; // optional, 0.0 to 5.0
-            movie.rating= ReadString("Enter the MPAA rating: ",false); // optional, MPAA (not enforced)
-            movie.isClassic = ReadBoolean("Is this a classic (Y/N)? "); // optional
+                // double reviewRating; // optional, 0.0 to 5.0
+                newMovie.rating= ReadString("Enter the MPAA rating: ", false); // optional, MPAA (not enforced)
+                newMovie.isClassic = ReadBoolean("Is this a classic (Y/N)? "); // optional
+
+                // Validation 
+                var error = newMovie.Validate();
+                if (String.IsNullOrEmpty(error))
+                {
+                    movie = newMovie;
+                    return;
+                }
+                DisplayError(error);
+            } while (true);
         }
 
+        /// <summary> Reads an Int32 from the console. </summary>
+        /// <param name="message"> The message to display. </param>
+        /// <param name="minimumvalue"> The minimum value allowed. </param>
+        /// <returns> The integral value that was entered. </returns>
         private static int ReadInt32 ( string message, int minimumvalue )
         {
             Console.Write(message);
