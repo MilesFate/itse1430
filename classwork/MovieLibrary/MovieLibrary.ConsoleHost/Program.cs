@@ -14,6 +14,7 @@ namespace MovieLibrary.ConsoleHost
             do
             {
                 char choice = GetInput();
+                // abc 123
                 /*if (choice == 'Q')
                     done = HandleQuit();
                 else if (choice == 'A')
