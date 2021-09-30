@@ -15,10 +15,24 @@ namespace MovieLibrary
         public string Title
         {
             // T get_Title()
-            get { return (_title != null) ? _title : ""; }
+            get 
+            { 
+                // null coalescing ::= E ?? E (returns first non-null expresssion), changes the type of the expression
+                // works with anything that can be null
+                return _title ?? ""; 
+            }
+            // (_title != null) ? _title : ""; conditional operator
 
             // Write void set_Title ( string value )
-            set { _title = (value != null) ? value.Trim() : null; }
+            set 
+            {
+                // _title = (value != null) ? value.Trim() : null;
+                // if _title is null it skips .Trim and returns null
+                _title = value?.Trim();
+
+                //Movie m;
+                //int id = m?.Id ?? 0; // int?
+            }
         }
         /// <summary> gets and sets the description </summary>
         public string Description
@@ -64,7 +78,7 @@ namespace MovieLibrary
         //{
         //    return DateTime.Now.Year - _releaseYear;
         //}
-
+        // calculated property
         public int AgeInYears
         {
             get { return DateTime.Now.Year - _releaseYear; }
@@ -123,6 +137,5 @@ namespace MovieLibrary
         {
             _description = Title;
         }
-
     }
 }

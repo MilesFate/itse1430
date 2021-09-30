@@ -209,5 +209,65 @@ namespace MovieLibrary.ConsoleHost
                 DisplayError("Invalid input");
             };
         }
+        static void DemoObjects()
+        {
+            object someValue = 10;
+            someValue = "hello";
+            Print(10);
+            Print("hello");
+            Print(45.6);
+            //someValue.Equals(10);
+        }
+
+        static void Print ( object value)
+        {
+            //Console.WriteLine(value);
+
+            // Type Checking
+            // is-operator ::= E is T (returns bool)
+            // as-operator ::= E is T (returns T or null), does not work with primatives
+            // pattern-matching ::= E is T id (returns E as T if valid or false otherwise)
+
+            // Type Casting
+            // C-style cas ::= (T) E blows up at runtime if wrong, only use with primatives
+
+            if (value is int)
+            {
+                Console.WriteLine((int)value);
+                return;
+            };
+
+            string str = value as string;
+            if(str != null)
+            {
+                Console.WriteLine(str);
+                return;
+            };
+
+            // Best Choice
+            if(value is double doubleValue)
+            {
+                Console.WriteLine(doubleValue);
+                return;
+            };
+
+            // Value types follow value assignment(copy)
+            int x = 10;
+            int y = x;
+            x = 20;
+            Console.WriteLine(y);
+
+            //Value type follow value semantics
+            var equal = x == y;
+
+            //reference types follow reference assignment
+            Movie m1 = new Movie();
+            Movie m2 = m1;
+            m1.Title = "jaws";
+            Console.WriteLine(m2.Title); // jaws
+
+            //reference types follow reference semantics
+            equal = m1 == m2; //Object.Equals
+        }
     }
 }
