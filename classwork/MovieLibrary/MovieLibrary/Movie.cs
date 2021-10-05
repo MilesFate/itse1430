@@ -11,53 +11,123 @@ namespace MovieLibrary
 
     public class Movie
     {
+        public int Id { get; private set; }
+        public string Title
+        {
+            // T get_Title()
+            get 
+            { 
+                // null coalescing ::= E ?? E (returns first non-null expresssion), changes the type of the expression
+                // works with anything that can be null
+                return _title ?? ""; 
+            }
+            // (_title != null) ? _title : ""; conditional operator
+
+            // Write void set_Title ( string value )
+            set 
+            {
+                // _title = (value != null) ? value.Trim() : null;
+                // if _title is null it skips .Trim and returns null
+                _title = value?.Trim();
+
+                //Movie m;
+                //int id = m?.Id ?? 0; // int?
+            }
+        }
+        /// <summary> gets and sets the description </summary>
+        public string Description
+        {
+            get { return (_description != null) ? _description : ""; }
+            set { _description = (value != null) ? value.Trim() : null; }
+        }
+        public string Rating
+        {
+            get { return (_rating != null) ? _rating : ""; }
+            set { _rating = (value != null) ? value.Trim() : null; }
+        }
+        // Full property Syntax
+        //public int RunLength
+        //{            
+        //    get { return _runLength; }            
+        //    set { _runLength = value; }
+        //}
+        public double ReviewRating { get; set; }
+        public int RunLength { get; set; }
+        public int ReleaseYear { get; set; } = MinimumreleaseYear;
+        public bool IsClassic { get; set; }
+        
+        // TODO : Fix field casting, don't make public
         // Fields
         // 1. Always camel cased, TODO:for now
         // 2. Should NEVER be public
         // 3. Always zero initalized or can default
         // 4. Cannot initalize to another field's value
 
-        public string title;
-        public string description;
-        public int runLength;
-        public int releaseYear = 1900;
-        public double reviewRating;
-        public string rating;
-        public bool isClassic;
+        private string _title;
+        private string _description;
+        //private int _runLength;
+        private int _releaseYear = MinimumreleaseYear;
+        //private double _reviewRating;
+        private string _rating;
+        //private bool _isClassic;
 
+        // Field is constant and therefore cannot be changed without recompiling
         public const int MinimumreleaseYear = 1900;
+
+        //public int GetAgeInYears()
+        //{
+        //    return DateTime.Now.Year - _releaseYear;
+        //}
+        // calculated property
+        public int AgeInYears
+        {
+            get { return DateTime.Now.Year - _releaseYear; }
+        }
+
+        //public bool IsBlackAndWhite ()
+        //{
+        //    return _releaseYear <= 1922;
+        //}
+
+        public bool IsBlackAndWhite
+        {
+            get { return _releaseYear <= 1922; }
+        }
 
         // Methods - provide functionality (functions inside a class)
         //          can refrence fields in method
+        //   `this` represents the current instance, always the first parameter (implied)
 
         /// <summary> Copies the movie. </summary>
         /// <returns> A copy of the movie. </returns>
         public Movie Copy()
         {
             var movie = new Movie();
-            movie.title = title;
-            movie.description = description;
-            movie.runLength = runLength;
-            movie.releaseYear = releaseYear;
-            movie.reviewRating = reviewRating;
-            movie.rating = rating;
-            movie.isClassic = isClassic;
+            movie.Title = Title;
+            movie.Description = Description;
+            movie.RunLength = RunLength;
+            movie.ReleaseYear = ReleaseYear;
+            movie.ReviewRating = ReviewRating;
+            movie.Rating = Rating;
+            movie.IsClassic = IsClassic;
 
             return movie;
         }
 
+        /// <summary>Validates the object.</summary>
+        /// <returns>The error, if any.</returns>
         public string Validate(/*Movie this*/)
         {
             // Name is required
-            if (String.IsNullOrEmpty(title)) // this.title
+            if (String.IsNullOrEmpty(Title)) // this.title
                 return "Title is required";
 
             // Run Length  >= 0
-            if (runLength < 0)
+            if (RunLength < 0)
                 return "Run Length must be at least zero";
 
             // Realse year >= 1900
-            if (releaseYear < MinimumreleaseYear)
+            if (ReleaseYear < MinimumreleaseYear)
                 return "Release Year must be at least "+MinimumreleaseYear;
 
             return null;
@@ -65,8 +135,7 @@ namespace MovieLibrary
 
         private void SetDescriptionToTitle ()
         {
-            description = title;
+            _description = Title;
         }
-
     }
 }
