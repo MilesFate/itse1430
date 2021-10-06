@@ -23,7 +23,7 @@ namespace LuisalbertoCastaneda.CharacterCreator.ConsoleHost
                 int choice = GetIntInput("Enter your choice: ");
                 switch (choice)
                 {
-                    case 0 : exit = HandleConfirmation("Are you sure you want to quit?"); break;
+                    case 0 : exit = HandleConfirmation("Are you sure you want to quit? (Y/N)"); break;
                     case 1 : AddCharacter(); break;
                     case 2 : ViewCharacter(); break;
                     case 3 : EditCharacter(); break;
@@ -84,43 +84,22 @@ namespace LuisalbertoCastaneda.CharacterCreator.ConsoleHost
             if (s_character == null)
                 AddCharacter();
 
-            Console.WriteLine($"Name: {s_character.Name}");
-            if (HandleConfirmation("Do you want to change the character's name? (Y/N)"))
-                s_character.Name = GetStringInput("Enter the new name for the character: ", true);
-
-            Console.WriteLine($"Profession: {s_character.Profession}");
-            if (HandleConfirmation("Do you want to change the character's profession? (Y/N)"))
-                s_character.Profession = GetProfession();
-
-            Console.WriteLine($"Race: {s_character.Race}");
-            if (HandleConfirmation("Do you want to change the character's race? (Y/N)"))
-                s_character.Race = GetRace();
-
-            Console.WriteLine($"Biography: {s_character.Biography}");
-            if (HandleConfirmation("Do you want to change the character's biography? (Y/N)"))
-                s_character.Biography = GetStringInput("Enter the new biography for the character: ", false);
-
-            Console.WriteLine($"Strength: {s_character.Strength}");
-            if (HandleConfirmation("Do you want to change the character's strength? (Y/N)"))
-                s_character.Strength = GetIntInput("Enter the character's strength: ");
-
-            Console.WriteLine($"Intelligence: {s_character.Intelligence}");
-            if (HandleConfirmation("Do you want to change the character's intelligence? (Y/N"))
-                s_character.Intelligence = GetIntInput("Enter the character's intelligence: ");
-
-            Console.WriteLine($"Agility: {s_character.Agility}");
-            if (HandleConfirmation("Do you want to change the character's Agility? (Y/N)"))
-                s_character.Agility = GetIntInput("Enter the character's agility: ");
-
-            Console.WriteLine($"Constitution: {s_character.Constitution}");
-            if (HandleConfirmation("Do you want to change the character's Constitution? (Y/N)"))
-                s_character.Constitution = GetIntInput("Enter the character's constitution: ");
-
-            Console.WriteLine($"Charisma: {s_character.Charisma}");
-            if (HandleConfirmation("Do you want to change the character's Charisma?"))
-                s_character.Charisma = GetIntInput("Enter the character's charisma: ");
-
-            ViewCharacter();
+            Console.WriteLine("0 - Exit Edit | 1 - Name | 2 - Profession | 3 - Race | 4 - Biography");
+            Console.WriteLine("5 - Strenth | 6 - Intelligence | 7 - Agility | 8 - Constitution | 9 - Charisma");
+            var input = GetIntInput("What do you wish to change? ");                
+            switch (input)
+            {
+                case 0: ViewCharacter(); break;
+                case 1: s_character.Name = GetStringInput("Enter the new name for the character: ", true); break;
+                case 2: s_character.Profession = GetProfession(); break;
+                case 3: s_character.Race = GetRace(); break;
+                case 4: s_character.Biography = GetStringInput("Enter the new biography for the character: ", false); break;
+                case 5: s_character.Strength = GetIntInput("Enter the character's strength: "); break;
+                case 6: s_character.Intelligence = GetIntInput("Enter the character's intelligence: "); break;
+                case 7: s_character.Agility = GetIntInput("Enter the character's agility: "); break;
+                case 8: s_character.Constitution = GetIntInput("Enter the character's constitution: "); break;
+                case 9: s_character.Charisma = GetIntInput("Enter the character's charisma: "); break;
+            }
         }
 
         static void DeleteCharacter ()
