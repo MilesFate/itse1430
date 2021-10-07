@@ -100,6 +100,7 @@ namespace LuisalbertoCastaneda.CharacterCreator.ConsoleHost
                 case 8: s_character.Constitution = GetIntInput("Enter the character's constitution: "); break;
                 case 9: s_character.Charisma = GetIntInput("Enter the character's charisma: "); break;
             }
+
         }
 
         static void DeleteCharacter ()
