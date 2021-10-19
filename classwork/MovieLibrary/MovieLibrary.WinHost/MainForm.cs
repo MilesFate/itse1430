@@ -1,52 +1,65 @@
-﻿using System;
+﻿// ITSE 1430
+// Movie Library
+using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace MovieLibrary.WinHost
 {
+    /// <summary>Main window.</summary>
     public partial class MainForm : Form
     {
-        public MainForm()
+        #region Construction
+
+        public MainForm ()
         {
             InitializeComponent();
 
-            // Additional init here
-            // Runs at design Time as well - be careful
+            //Additional init here
+            //Runs at design time as well - be careful
         }
-        private static bool Confirm ( string message, string title )
-        {
-            return MessageBox.Show(message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
-        }
+        #endregion
 
-        private void HandleFileExit ( object sender, EventArgs e )
+        #region Event Handlers
+
+        //Called when File\Exit is selected
+        private void OnFileExit ( object sender, EventArgs e )
         {
-            // Confirm Exit?
+            //Confirm exit?
             if (!Confirm("Do you want to quit?", "Confirm"))
                 return;
-            Close();
-        }        
 
+            Close();
+        }
+
+        //Called when Help\About is selected
         private void OnHelpAbout ( object sender, EventArgs e )
         {
             var dlg = new AboutBox();
-            // blocks until child form is closed
+            //Blocks until child form is closed
             dlg.ShowDialog();
 
-            // shows display modeless, not blocking
+            //Show displays modeless, not blocking
             //dlg.Show();
             //MessageBox.Show("After Show");
         }
 
-        private void HandleMovieAdd ( object sender, EventArgs e )
+        //Called when Movie\Add is selected
+        private void OnMovieAdd ( object sender, EventArgs e )
         {
             var dlg = new MovieForm();
-            if (dlg.ShowDialog() != DialogResult.OK)
+            dlg.StartPosition = FormStartPosition.CenterParent;
+            //ShowDialog -> DialogResult
+            if (dlg.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            UpdateUI();
+            //TODO: Save movie            
             _movie = dlg.Movie;
+            UpdateUI();
         }
 
-        private void HandleMovieEdit ( object sender, EventArgs e )
+        //Called when Movie\Edit is selected
+        private void OnMovieEdit ( object sender, EventArgs e )
         {
             if (_movie == null)
                 return;
@@ -63,8 +76,30 @@ namespace MovieLibrary.WinHost
             UpdateUI();
         }
 
+        //Called when Movie\Delete is selected
+        private void OnMovieDelete ( object sender, EventArgs e )
+        {
+            if (_movie == null)
+                return;
+
+            //Confirmation
+            if (!Confirm($"Are you sure you want to delete '{_movie.Title}'?", "Delete"))
+                return;
+
+            //TODO: Delete
+            _movie = null;
+            UpdateUI();
+        }
+        #endregion
+
+        #region Private Members
+
+        private Movie _movie;
+
+        /// <summary>Updates UI whenever something has changed.</summary>
         private void UpdateUI ()
         {
+            //Update movie list            
             var movies = (_movie != null) ? new Movie[1] : new Movie[0];
             if (_movie != null)
                 movies[0] = _movie;
@@ -76,16 +111,17 @@ namespace MovieLibrary.WinHost
             _listMovies.DataSource = bindingSource;
         }
 
-        private Movie _movie;
-
-        private void HandleMovieDelete ( object sender, EventArgs e )
+        /// <summary>Displays a confirmation dialog.</summary>
+        /// <param name="message">The confirmation message.</param>
+        /// <param name="title">The confirmation title.</param>
+        /// <returns>true if confirmed or false otherwise.</returns>
+        private static bool Confirm ( string message, string title )
         {
-            if (_movie == null)
-                return;
-            if (!Confirm($"are you sure you want to delete {_movie.Title}?", "delete"))
-                return;
-            _movie = null;
-            UpdateUI();
+            return MessageBox.Show(message, title,
+                                   MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                        == DialogResult.Yes;
         }
+
+        #endregion        
     }
 }

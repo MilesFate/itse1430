@@ -67,7 +67,7 @@ namespace MovieLibrary.WinHost
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.HandleFileExit);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnFileExit);
             // 
             // moviesToolStripMenuItem
             // 
@@ -85,7 +85,7 @@ namespace MovieLibrary.WinHost
             this.addToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
             this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addToolStripMenuItem.Text = "&Add";
-            this.addToolStripMenuItem.Click += new System.EventHandler(this.HandleMovieAdd);
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.OnMovieAdd);
             // 
             // editToolStripMenuItem
             // 
@@ -93,7 +93,7 @@ namespace MovieLibrary.WinHost
             this.editToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Insert)));
             this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editToolStripMenuItem.Text = "&Edit";
-            this.editToolStripMenuItem.Click += new System.EventHandler(this.HandleMovieEdit);
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.OnMovieEdit);
             // 
             // deleteToolStripMenuItem
             // 
@@ -101,7 +101,7 @@ namespace MovieLibrary.WinHost
             this.deleteToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteToolStripMenuItem.Text = "&Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.HandleMovieDelete);
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.OnMovieDelete);
             // 
             // helpToolStripMenuItem
             // 
