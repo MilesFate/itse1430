@@ -22,6 +22,14 @@ namespace MovieLibrary.WinHost
 
         #region Event Handlers
 
+
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            UpdateUI();
+        }
+
         //Called when File\Exit is selected
         private void OnFileExit ( object sender, EventArgs e )
         {
@@ -94,15 +102,22 @@ namespace MovieLibrary.WinHost
 
         #region Private Members
 
+        // TODO : Remove this..
         private Movie _movie;
+
+        private MovieDataBase _movies = new MovieDataBase();
 
         /// <summary>Updates UI whenever something has changed.</summary>
         private void UpdateUI ()
         {
+
+            Movie[] movies = _movies.GetAll();
+            var movie = movies[1] = new Movie();
+            movie.Title = "Done";
+            movie.Description = "Something";
+
             //Update movie list            
-            var movies = (_movie != null) ? new Movie[1] : new Movie[0];
-            if (_movie != null)
-                movies[0] = _movie;
+            
 
             var bindingSource = new BindingSource();
             bindingSource.DataSource = movies;
