@@ -50,5 +50,38 @@ namespace LuisalbertoCastaneda.CharacterCreator
         public int Constitution { get; set; } = minimumValue;
 
         public int Charisma { get; set; } = minimumValue;
+
+        public string Validate ()
+        {
+
+            if (String.IsNullOrEmpty(Name))           
+                return "Name is required";
+
+            if (String.IsNullOrEmpty(Biography))
+                return "Biography is required";
+
+            if (Strength < 0 || Strength > 100)
+                return "Run Length must be Between 0 - 100";
+
+            if (Intelligence < 0 || Intelligence > 100)
+                return "Run Length must be Between 0 - 100";
+
+            if (Agility < 0 || Agility > 100)
+                return "Run Length must be Between 0 - 100";
+
+            if (Constitution < 0 || Constitution > 100)
+                return "Run Length must be Between 0 - 100";
+
+            if (Charisma < 0 || Charisma > 100)
+                return "Charisma must be Between 0 - 100";
+
+            if (String.IsNullOrEmpty(Profession))
+                return "Profession is required";
+
+            if (String.IsNullOrEmpty(Race))
+                return "Race is required";
+
+            return null;
+        }
     }
 }
