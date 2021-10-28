@@ -1,4 +1,6 @@
-﻿using System;
+﻿// ITSE 1430
+// Movie Library
+using System;
 
 namespace MovieLibrary
 {
@@ -112,6 +114,7 @@ namespace MovieLibrary
         public double ReviewRating { get; set; }
 
         public bool IsClassic { get; set; }
+
         //{
         //    get { return _isClassic; }
         //    set { _isClassic = value; }
@@ -160,8 +163,6 @@ namespace MovieLibrary
         //   Can reference fields in method
         //   `this` represents the current instance, always the first parameter (implied)
 
-        /// <summary>Copies the movie.</summary>
-        /// <returns>A copy of the movie.</returns>
         public Movie Clone ()
         {
             var movie = new Movie();

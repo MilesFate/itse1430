@@ -4,6 +4,8 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using MovieLibrary.Memory;
+
 namespace MovieLibrary.WinHost
 {
     /// <summary>Main window.</summary>
@@ -20,15 +22,14 @@ namespace MovieLibrary.WinHost
         }
         #endregion
 
-        #region Event Handlers
-
-
         protected override void OnLoad ( EventArgs e )
         {
             base.OnLoad(e);
 
             UpdateUI();
         }
+
+        #region Event Handlers
 
         //Called when File\Exit is selected
         private void OnFileExit ( object sender, EventArgs e )
@@ -44,6 +45,7 @@ namespace MovieLibrary.WinHost
         private void OnHelpAbout ( object sender, EventArgs e )
         {
             var dlg = new AboutBox();
+
             //Blocks until child form is closed
             dlg.ShowDialog();
 
@@ -57,67 +59,86 @@ namespace MovieLibrary.WinHost
         {
             var dlg = new MovieForm();
             dlg.StartPosition = FormStartPosition.CenterParent;
-            //ShowDialog -> DialogResult
-            if (dlg.ShowDialog(this) != DialogResult.OK)
-                return;
 
-            //TODO: Save movie            
-            _movie = dlg.Movie;
+            do
+            {
+                //ShowDialog -> DialogResult
+                if (dlg.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                //TODO: Error handling
+                if (_movies.Add(dlg.Movie, out var error) != null)
+                    break;
+
+                DisplayError(error, "Add Failed");
+            } while (true);
+
             UpdateUI();
+        }
+
+        private void DisplayError ( string message, string title )
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         //Called when Movie\Edit is selected
         private void OnMovieEdit ( object sender, EventArgs e )
         {
-            if (_movie == null)
+            var movie = GetSelectedMovie();
+            if (movie == null)
                 return;
 
             var dlg = new MovieForm();
-            dlg.Movie = _movie;
+            dlg.Movie = movie;
+            do
+            {
+                //ShowDialog -> DialogResult
+                if (dlg.ShowDialog() != DialogResult.OK)
+                    return;
 
-            //ShowDialog -> DialogResult
-            if (dlg.ShowDialog() != DialogResult.OK)
-                return;
-
-            //TODO: Save movie            
-            _movie = dlg.Movie;
+                //TODO: Error handling
+                var error = _movies.Update(movie.Id, dlg.Movie);
+                if (String.IsNullOrEmpty(error))
+                    break;
+                DisplayError(error, "Update Failed");
+            } while (true);
             UpdateUI();
+        }
+
+        private Movie GetSelectedMovie ()
+        {
+            return _listMovies.SelectedItem as Movie;
         }
 
         //Called when Movie\Delete is selected
         private void OnMovieDelete ( object sender, EventArgs e )
         {
-            if (_movie == null)
+            var movie = GetSelectedMovie();
+            if (movie == null)
                 return;
 
             //Confirmation
-            if (!Confirm($"Are you sure you want to delete '{_movie.Title}'?", "Delete"))
+            if (!Confirm($"Are you sure you want to delete '{movie.Title}'?", "Delete"))
                 return;
 
-            //TODO: Delete
-            _movie = null;
+            //TODO: Error handling
+            _movies.Delete(movie.Id);
             UpdateUI();
         }
         #endregion
 
         #region Private Members
 
-        // TODO : Remove this..
-        private Movie _movie;
-
-        private MovieDataBase _movies = new MovieDataBase();
+        private MemoryMovieDatabase _movies = new MemoryMovieDatabase();
 
         /// <summary>Updates UI whenever something has changed.</summary>
         private void UpdateUI ()
         {
-
+            //Update movie list            
             Movie[] movies = _movies.GetAll();
             var movie = movies[1] = new Movie();
-            movie.Title = "Done";
+            movie.Title = "Dune";
             movie.Description = "Something";
-
-            //Update movie list            
-            
 
             var bindingSource = new BindingSource();
             bindingSource.DataSource = movies;
@@ -130,9 +151,9 @@ namespace MovieLibrary.WinHost
         /// <param name="message">The confirmation message.</param>
         /// <param name="title">The confirmation title.</param>
         /// <returns>true if confirmed or false otherwise.</returns>
-        private static bool Confirm ( string message, string title )
+        private bool Confirm ( string message, string title )
         {
-            return MessageBox.Show(message, title,
+            return MessageBox.Show(this, message, title,
                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                         == DialogResult.Yes;
         }

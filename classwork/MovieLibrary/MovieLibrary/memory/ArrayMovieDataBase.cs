@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary
 {
-    public class MovieDataBase
+    internal class ArrayMovieDataBase
     {
-        public MovieDataBase ()
+        public ArrayMovieDataBase ()
         {
             //TODO : Seed
             //Object initializer - creating and initializing new object
