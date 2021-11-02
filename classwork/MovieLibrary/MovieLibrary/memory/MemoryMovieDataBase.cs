@@ -9,41 +9,74 @@ using System.Threading.Tasks;
 
 namespace MovieLibrary.Memory
 {
-    public class MemoryMovieDatabase
+    public class MemoryMovieDatabase : IMovieDatabase
     {
         public MemoryMovieDatabase ()
         {
+            // Collection Initializer syntax
+            var movies = new[] {
+                new Movie() {
+                    Title = "Dune",
+                    Rating = "PG",
+                    ReleaseYear = 1982,
+                    RunLength = 300,
+                    Id = 2
+                },
+
+                new Movie() {
+                    Title = "Dune",
+                    Rating = "PG",
+                    ReleaseYear = 1982,
+                    RunLength = 300,
+                    Id = 2
+                },
+
+                new Movie() {
+                    Title = "Jaws 2",
+                    Rating = "PG-13",
+                    ReleaseYear = 1979,
+                    RunLength = 190,
+                    Id = 3,
+                },
+
+            };
+
+            _items.AddRange(movies);
+
             //Object initializer - creating and initializing new object
             // new T() {
             //   Property1 = Value1,
             //   Property2 = Value2,
             //   ...
             // }
-            _items.Add(new Movie() {
-                Title = "Jaws",
-                Rating = "PG",
-                RunLength = 210,
-                ReleaseYear = 1977,
-                Description = "Shark movie",
-                Id = 1,
-            });
+            //_items.Add(new Movie() {
+            //    Title = "Jaws",
+            //    Rating = "PG",
+            //    RunLength = 210,
+            //    ReleaseYear = 1977,
+            //    Description = "Shark movie",
+            //    Id = 1,
+            //});
 
-            _items.Add(new Movie() {
-                Title = "Dune",
-                Rating = "PG",
-                ReleaseYear = 1982,
-                RunLength = 300,
-                Id = 2
-            });
+            //_items.Add(new Movie() {
+            //    Title = "Dune",
+            //    Rating = "PG",
+            //    ReleaseYear = 1982,
+            //    RunLength = 300,
+            //    Id = 2
+            //});
 
-            _items.Add(new Movie() {
-                Title = "Jaws 2",
-                Rating = "PG-13",
-                ReleaseYear = 1979,
-                RunLength = 190,
-                Id = 3,
-            });
+            //_items.Add(new Movie() {
+            //    Title = "Jaws 2",
+            //    Rating = "PG-13",
+            //    ReleaseYear = 1979,
+            //    RunLength = 190,
+            //    Id = 3,
+            //});
         }
+
+        public void IsOnlyHere ()
+        { }
 
         //TODO: Error handling
         public Movie Add ( Movie movie, out string error )
@@ -92,7 +125,7 @@ namespace MovieLibrary.Memory
         }
 
         //TODO: Update
-        public string Update (int id, Movie movie )
+        public string Update ( int id, Movie movie )
         {
             //Movie must be valid
             var error = movie.Validate();
@@ -135,7 +168,7 @@ namespace MovieLibrary.Memory
         }
 
         //TODO: Get
-        public Movie Get (int id)
+        public Movie Get ( int id )
         {
             //TODO: Validate id
             var movie = FindById(id);

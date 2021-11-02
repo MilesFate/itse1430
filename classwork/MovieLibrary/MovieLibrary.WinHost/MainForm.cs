@@ -113,6 +113,7 @@ namespace MovieLibrary.WinHost
         //Called when Movie\Delete is selected
         private void OnMovieDelete ( object sender, EventArgs e )
         {
+            //_movies.IsOnlyHere();
             var movie = GetSelectedMovie();
             if (movie == null)
                 return;
@@ -129,7 +130,7 @@ namespace MovieLibrary.WinHost
 
         #region Private Members
 
-        private MemoryMovieDatabase _movies = new MemoryMovieDatabase();
+        private IMovieDatabase _movies = new MemoryMovieDatabase();
 
         /// <summary>Updates UI whenever something has changed.</summary>
         private void UpdateUI ()
