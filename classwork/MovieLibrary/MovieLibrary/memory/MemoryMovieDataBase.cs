@@ -10,69 +10,7 @@ namespace MovieLibrary.Memory
 {
     public class MemoryMovieDatabase : IMovieDatabase
     {
-        public MemoryMovieDatabase ()
-        {
-            // Collection Initializer syntax
-            var movies = new[] {
-                new Movie() {
-                    Title = "Dune",
-                    Rating = "PG",
-                    ReleaseYear = 1982,
-                    RunLength = 300,
-                    Id = 2
-                },
-
-                new Movie() {
-                    Title = "Dune",
-                    Rating = "PG",
-                    ReleaseYear = 1982,
-                    RunLength = 300,
-                    Id = 2
-                },
-
-                new Movie() {
-                    Title = "Jaws 2",
-                    Rating = "PG-13",
-                    ReleaseYear = 1979,
-                    RunLength = 190,
-                    Id = 3,
-                },
-
-            };
-
-            _items.AddRange(movies);
-
-            //Object initializer - creating and initializing new object
-            // new T() {
-            //   Property1 = Value1,
-            //   Property2 = Value2,
-            //   ...
-            // }
-            //_items.Add(new Movie() {
-            //    Title = "Jaws",
-            //    Rating = "PG",
-            //    RunLength = 210,
-            //    ReleaseYear = 1977,
-            //    Description = "Shark movie",
-            //    Id = 1,
-            //});
-
-            //_items.Add(new Movie() {
-            //    Title = "Dune",
-            //    Rating = "PG",
-            //    ReleaseYear = 1982,
-            //    RunLength = 300,
-            //    Id = 2
-            //});
-
-            //_items.Add(new Movie() {
-            //    Title = "Jaws 2",
-            //    Rating = "PG-13",
-            //    ReleaseYear = 1979,
-            //    RunLength = 190,
-            //    Id = 3,
-            //});
-        }
+       
 
         public void IsOnlyHere ()
         { }
@@ -81,8 +19,8 @@ namespace MovieLibrary.Memory
         public Movie Add ( Movie movie, out string error )
         {
             //Movie must be valid
-            var Validator = new ObjectValidator();
-            if (!Validator.TryValidate(movie,out error))
+
+            if (!ObjectValidator.TryValidate(movie, out error))
                 return null;
 
             //Movie title must be unique
@@ -127,10 +65,8 @@ namespace MovieLibrary.Memory
         public string Update ( int id, Movie movie )
         {
             //Movie must be valid
-            var Validator = new ObjectValidator();
-            if (!Validator.TryValidate(movie, out var error))
+            if (!ObjectValidator.TryValidate(movie, out var error))
                 return error;
-
 
             var existing = FindById(id);
             if (existing == null)
@@ -181,10 +117,11 @@ namespace MovieLibrary.Memory
             //NEVER DO THIS - should not return a ref type directly, it can be modified
             //return _items;
             // Use Iterator Syntax
-            int counter = 0;
+            //int counter = 0;
             foreach (var item in _items)
             {
-                ++counter;
+                //++counter;
+                System.Diagnostics.Debug.WriteLine($"Returning {item.Title}");
                 yield return item.Clone();
             };
 
