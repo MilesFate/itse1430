@@ -45,20 +45,26 @@ namespace MovieLibrary.Memory
 
         private Movie FindByTitle ( string title )
         {
-            foreach (var movie in _items)
-                if (String.Compare(title, movie.Title, true) == 0)
-                    return movie;
+            return _items.FirstOrDefault(movie => String.Compare(title, movie.Title, true) == 0);
+            //foreach (var movie in _items)
+            //    if (String.Compare(title, movie.Title, true) == 0)
+            //        return movie;
 
-            return null;
+            //return null;
         }
 
         private Movie FindById ( int id )
         {
-            foreach (var movie in _items)
-                if (movie.Id == id)
-                    return movie;
+            // Where (Func<Movie, bool>) -> IEnumerable<T>
+            //return _items.FirstOrDefault(x => x.Id == id);
+            return (from movie in _items 
+                    where movie.Id == id
+                    select movie).FirstOrDefault();
+            //foreach (var movie in _items)
+            //    if (movie.Id == id)
+            //        return movie;
 
-            return null;
+            //return null;
         }
 
         //TODO: Update
@@ -111,6 +117,28 @@ namespace MovieLibrary.Memory
             return movie?.Clone();
         }
 
+        private class IdAndTitle
+        {
+            public int Id { get; set; }
+            public string Title { get; set; }
+        }
+        //private IEnumerable<IdAndTitle> MySelect ( IEnumerable<Movie> items, Func<Movie>, IdAndTitle> converter)
+        //{
+
+        //}
+        private IdAndTitle Convert (Movie movie )
+        {
+            return new IdAndTitle() {
+                Id = movie.Id,
+                Title = movie.Title
+            };
+        }
+
+        //private Movie Clone (Movie movie )
+        //{
+        //    return movie.Clone();
+        //}
+
         //TODO: Get All
         public IEnumerable<Movie> GetAll ()
         {
@@ -118,12 +146,17 @@ namespace MovieLibrary.Memory
             //return _items;
             // Use Iterator Syntax
             //int counter = 0;
-            foreach (var item in _items)
-            {
-                //++counter;
-                System.Diagnostics.Debug.WriteLine($"Returning {item.Title}");
-                yield return item.Clone();
-            };
+            IEnumerable<Movie> items = _items;
+            // Select transforms S to T
+            //IEnumerable<IdAndTitle> titles =  _items.Select(Convert);
+            //return _items.Select(x => x.Clone());
+            return from x in _items
+                   select x.Clone();
+            //foreach (var item in _items)
+            //{
+            //    //++counter;
+            //    yield return item.Clone();
+            //};
 
             //Must clone both array and movies to return new copies
             //Each iteration the next element is copied to the item variable            

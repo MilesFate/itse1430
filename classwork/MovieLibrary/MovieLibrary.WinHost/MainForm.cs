@@ -150,8 +150,13 @@ namespace MovieLibrary.WinHost
                     var firstMovie = movies.FirstOrDefault();
                 }
             }
+
+            movies = from x in movies
+                     orderby x.Title, x.ReleaseYear
+                     select x;
             var bindingSource = new BindingSource();
-            bindingSource.DataSource = movies.ToArray();
+            //bindingSource.DataSource = movies.OrderBy(x => x.Title).ThenBy(x => x.ReleaseYear).ToArray();
+            
 
             //bind the movies to the listbox
             _listMovies.DataSource = bindingSource;

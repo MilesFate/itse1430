@@ -52,36 +52,35 @@ namespace MovieLibrary
         //   Setter has a single parameter called `value` of property type
         public string Title
         {
+            get => _title?? "";
+            set => _title = value?.Trim();
+            #region old
             //null coalescing ::= E ?? E (returns first non-null expression)
             //null conditional ::= E?.M (returns M?) changes the type of the expression
-
             //Read: T get_Title ()
-            get {
-                return _title ?? "";
-
-                //return (_title != null) ? _title : "";
-                //if (_title == null)
-                //    return "";
-
-                //return _title; 
-            }
-
-            //Write void set_Title ( string value ) 
-            set {
-                //_title = value;
-                //_title = (value != null) ? value.Trim() : null;
-                _title = value?.Trim();
-
-                //Movie m;
-                //int id = m?.Id ?? 0; //int?
-            }
+            //get {
+            //    return _title ?? "";
+            //    //return (_title != null) ? _title : "";
+            //    //if (_title == null)
+            //    //    return "";
+            //    //return _title; 
+            //}
+            ////Write void set_Title ( string value ) 
+            //set {
+            //    //_title = value;
+            //    //_title = (value != null) ? value.Trim() : null;
+            //    _title = value?.Trim();
+            //    //Movie m;
+            //    //int id = m?.Id ?? 0; //int?
+            //}
+            #endregion
         }
 
         /// <summary>Gets or sets the description.</summary>
         public string Description
         {
-            get { return (_description != null) ? _description : ""; }
-            set { _description = (value != null) ? value.Trim() : null; }
+            get => (_description != null) ? _description : ""; 
+            set => _description = (value != null) ? value.Trim() : null; 
         }
 
         public string Rating
@@ -156,34 +155,42 @@ namespace MovieLibrary
         //{
         //    return ReleaseYear < 1922;
         //}
-        public bool IsBlackAndWhite
-        {
-            get { return ReleaseYear < 1922; }
-        }
+        public bool IsBlackAndWhite => ReleaseYear < 1922;
+        //{
+        //    get => ReleaseYear < 1922; 
+        //}
 
         // Methods - provide functionality (function inside a class)
         //   Can reference fields in method
         //   `this` represents the current instance, always the first parameter (implied)
 
-        public Movie Clone ()
-        {
-            var movie = new Movie();
-            movie.Id = Id;
-            movie.Title = Title;
-            movie.Description = Description;
-            movie.RunLength = RunLength;
-            movie.ReleaseYear = ReleaseYear;
-            movie.ReviewRating = ReviewRating;
-            movie.Rating = Rating;
-            movie.IsClassic = IsClassic;
+        public Movie Clone () => new Movie() {
+            Id = Id,
+            Title = Title,
+            Description = Description,
+            RunLength = RunLength,
+            ReleaseYear = ReleaseYear,
+            ReviewRating = ReviewRating,
+            Rating = Rating,
+            IsClassic = IsClassic, };
+        //{
+        //    var movie = new Movie();
+        //    movie.Id = Id;
+        //    movie.Title = Title;
+        //    movie.Description = Description;
+        //    movie.RunLength = RunLength;
+        //    movie.ReleaseYear = ReleaseYear;
+        //    movie.ReviewRating = ReviewRating;
+        //    movie.Rating = Rating;
+        //    movie.IsClassic = IsClassic;
 
-            return movie;
-        }
+            //    return movie;
+            //}
 
-        public override string ToString ()
-        {
-            return $"{Title} ({ReleaseYear})";
-        }
+        public override string ToString () => $"{Title} ({ReleaseYear})";
+        //{
+        //    return $"{Title} ({ReleaseYear})";
+        //}
 
         /// <summary>Validates the object.</summary>
         /// <returns>The error, if any.</returns>
