@@ -2,6 +2,7 @@
 // Movie Library
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 using MovieLibrary.Memory;
@@ -26,7 +27,7 @@ namespace MovieLibrary.WinHost
         {
             base.OnLoad(e);
 
-            UpdateUI();
+            UpdateUI(true);
         }
 
         #region Event Handlers
@@ -66,14 +67,31 @@ namespace MovieLibrary.WinHost
                 if (dlg.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                //TODO: Error handling
-                if (_movies.Add(dlg.Movie, out var error) != null)
-                    break;
+                try
+                {
+                    _movies.Add(dlg.Movie);
+                    return;
+                } catch (ArgumentException ex)
+                {
+                    DisplayError(ex.Message, " Failed");
+                } catch (InvalidOperationException ex)
+                {
+                    DisplayError(ex.Message, " Failed");
+                } catch (NotSupportedException ex)
+                {
+                    DisplayError(ex.Message, "Failed");
+                    // Do some Logging
+                    throw;
+                } catch (System.IO.IOException ex)
+                {
+                    throw new Exception("IO Failed",ex);
+                } catch (Exception ex)
+                {
+                    DisplayError(ex.Message, "Failed");
+                };
 
-                DisplayError(error, "Add Failed");
+                UpdateUI();
             } while (true);
-
-            UpdateUI();
         }
 
         private void DisplayError ( string message, string title )
@@ -96,13 +114,16 @@ namespace MovieLibrary.WinHost
                 if (dlg.ShowDialog() != DialogResult.OK)
                     return;
 
-                //TODO: Error handling
-                var error = _movies.Update(movie.Id, dlg.Movie);
-                if (String.IsNullOrEmpty(error))
-                    break;
-                DisplayError(error, "Update Failed");
+                try
+                {
+                    _movies.Update(movie.Id, dlg.Movie);
+                    UpdateUI();
+                    return;
+                } catch (Exception ex)
+                {
+                    DisplayError(ex.Message, "Update Failed");
+                };
             } while (true);
-            UpdateUI();
         }
 
         private Movie GetSelectedMovie ()
@@ -113,6 +134,7 @@ namespace MovieLibrary.WinHost
         //Called when Movie\Delete is selected
         private void OnMovieDelete ( object sender, EventArgs e )
         {
+            //_movies.IsOnlyHere();
             var movie = GetSelectedMovie();
             if (movie == null)
                 return;
@@ -121,27 +143,45 @@ namespace MovieLibrary.WinHost
             if (!Confirm($"Are you sure you want to delete '{movie.Title}'?", "Delete"))
                 return;
 
-            //TODO: Error handling
-            _movies.Delete(movie.Id);
-            UpdateUI();
+            try
+            {
+                _movies.Delete(movie.Id);
+                UpdateUI();
+            } catch (Exception ex)
+            {
+                DisplayError(ex.Message, "Delete Failed");
+            };
         }
         #endregion
 
         #region Private Members
 
-        private MemoryMovieDatabase _movies = new MemoryMovieDatabase();
+        private IMovieDatabase _movies = new MemoryMovieDatabase();
 
         /// <summary>Updates UI whenever something has changed.</summary>
-        private void UpdateUI ()
+        private void UpdateUI ( bool isFirstRun = false )
         {
-            //Update movie list            
-            Movie[] movies = _movies.GetAll();
-            var movie = movies[1] = new Movie();
-            movie.Title = "Dune";
-            movie.Description = "Something";
+            //IEnumerable<TextBox> onlyTextBoxes = Controls.OfType<TextBox>();
 
+            //Update movie list            
+            var movies = _movies.GetAll();
+            if (isFirstRun && !movies.Any())
+            {
+                if (Confirm("Do you want to seed the database", "Seed"))
+                {
+                    _movies.Seed();
+                    //SeedDataBase.Seed(_movies);
+                    movies = _movies.GetAll();
+                    var firstMovie = movies.FirstOrDefault();
+                }
+            }
+
+            movies = from x in movies
+                     orderby x.Title, x.ReleaseYear
+                     select x;
             var bindingSource = new BindingSource();
-            bindingSource.DataSource = movies;
+            //bindingSource.DataSource = movies.OrderBy(x => x.Title).ThenBy(x => x.ReleaseYear).ToArray();
+            
 
             //bind the movies to the listbox
             _listMovies.DataSource = bindingSource;

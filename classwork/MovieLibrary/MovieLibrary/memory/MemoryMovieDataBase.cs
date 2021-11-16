@@ -3,63 +3,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieLibrary.Memory
 {
-    public class MemoryMovieDatabase
+    public class MemoryMovieDatabase : IMovieDatabase
     {
-        public MemoryMovieDatabase ()
-        {
-            //Object initializer - creating and initializing new object
-            // new T() {
-            //   Property1 = Value1,
-            //   Property2 = Value2,
-            //   ...
-            // }
-            _items.Add(new Movie() {
-                Title = "Jaws",
-                Rating = "PG",
-                RunLength = 210,
-                ReleaseYear = 1977,
-                Description = "Shark movie",
-                Id = 1,
-            });
 
-            _items.Add(new Movie() {
-                Title = "Dune",
-                Rating = "PG",
-                ReleaseYear = 1982,
-                RunLength = 300,
-                Id = 2
-            });
-
-            _items.Add(new Movie() {
-                Title = "Jaws 2",
-                Rating = "PG-13",
-                ReleaseYear = 1979,
-                RunLength = 190,
-                Id = 3,
-            });
-        }
+        public void IsOnlyHere ()
+        { }
 
         //TODO: Error handling
-        public Movie Add ( Movie movie, out string error )
+        public Movie Add ( Movie movie )
         {
             //Movie must be valid
-            error = movie.Validate();
-            if (!String.IsNullOrEmpty(error))
-                return null;
+
+            // Validation
+            //  Movie is not null
+            //  Movie is Valid
+            //  Movie cannot already exist
+
+            // Think of Porth thing "You cant do that, it's illegal" => assert isinstance(op.operand, OpAddr), "This could be a bug in the parsing step"
+            //if (movie == null)
+            //    throw new ArgumentNullException(nameof(movie));
+            var item = movie ?? throw new ArgumentNullException(nameof(movie));
+
+
+            ObjectValidator.Validate(movie);
 
             //Movie title must be unique
             var existing = FindByTitle(movie.Title);
             if (existing != null)
-            {
-                error = "Movie must be unique";
-                return null;
-            };
+                throw new InvalidOperationException("Movie must be unique");
 
             //Clone
             var newMovie = movie.Clone();
@@ -75,43 +51,55 @@ namespace MovieLibrary.Memory
 
         private Movie FindByTitle ( string title )
         {
-            foreach (var movie in _items)
-                if (String.Compare(title, movie.Title, true) == 0)
-                    return movie;
+            return _items.FirstOrDefault(movie => String.Compare(title, movie.Title, true) == 0);
+            //foreach (var movie in _items)
+            //    if (String.Compare(title, movie.Title, true) == 0)
+            //        return movie;
 
-            return null;
+            //return null;
         }
 
         private Movie FindById ( int id )
         {
-            foreach (var movie in _items)
-                if (movie.Id == id)
-                    return movie;
+            // Where (Func<Movie, bool>) -> IEnumerable<T>
+            //return _items.FirstOrDefault(x => x.Id == id);
+            return (from movie in _items 
+                    where movie.Id == id
+                    select movie).FirstOrDefault();
+            //foreach (var movie in _items)
+            //    if (movie.Id == id)
+            //        return movie;
 
-            return null;
+            //return null;
         }
 
         //TODO: Update
-        public string Update (int id, Movie movie )
+        public void Update ( int id, Movie movie )
         {
+            // Validation
+            //    Id must be > 0
+            //    Movie is not null
+            //    Movie is valid
+            //    Movie does not already exist            
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
+            if (movie == null)
+                throw new ArgumentNullException(nameof(movie));
+
             //Movie must be valid
-            var error = movie.Validate();
-            if (!String.IsNullOrEmpty(error))
-                return error;
+            ObjectValidator.Validate(movie);
 
-
+            //Movie must exist
             var existing = FindById(id);
             if (existing == null)
-                return "Movie not found";
+                throw new Exception("Movie not found");
+
             //Movie title must be unique
             var dup = FindByTitle(movie.Title);
-            if (dup != null  && dup.Id != id)
-            {
-                return "Movie must be unique";
-            };
+            if (dup != null && dup.Id != id)
+                throw new InvalidOperationException("Movie must be unique");
 
             Copy(existing, movie);
-            return null;
         }
 
         private void Copy ( Movie target, Movie source )
@@ -126,8 +114,9 @@ namespace MovieLibrary.Memory
 
         //Delete
         public void Delete ( int id )
-        {
-            //TODO: Validate id
+        {            
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
 
             var movie = FindById(id);
             if (movie != null)
@@ -135,29 +124,66 @@ namespace MovieLibrary.Memory
         }
 
         //TODO: Get
-        public Movie Get (int id)
+        public Movie Get ( int id )
         {
-            //TODO: Validate id
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
+
             var movie = FindById(id);
 
             return movie?.Clone();
         }
 
+        private class IdAndTitle
+        {
+            public int Id { get; set; }
+            public string Title { get; set; }
+        }
+        //private IEnumerable<IdAndTitle> MySelect ( IEnumerable<Movie> items, Func<Movie>, IdAndTitle> converter)
+        //{
+
+        //}
+        private IdAndTitle Convert (Movie movie )
+        {
+            return new IdAndTitle() {
+                Id = movie.Id,
+                Title = movie.Title
+            };
+        }
+
+        //private Movie Clone (Movie movie )
+        //{
+        //    return movie.Clone();
+        //}
+
         //TODO: Get All
-        public Movie[] GetAll ()
+        public IEnumerable<Movie> GetAll ()
         {
             //NEVER DO THIS - should not return a ref type directly, it can be modified
             //return _items;
+            // Use Iterator Syntax
+            //int counter = 0;
+            IEnumerable<Movie> items = _items;
+            // Select transforms S to T
+            //IEnumerable<IdAndTitle> titles =  _items.Select(Convert);
+            //return _items.Select(x => x.Clone());
+            return from x in _items
+                   select x.Clone();
+            //foreach (var item in _items)
+            //{
+            //    //++counter;
+            //    yield return item.Clone();
+            //};
 
             //Must clone both array and movies to return new copies
             //Each iteration the next element is copied to the item variable            
-            var items = new Movie[_items.Count];
+            //var items = new Movie[_items.Count];
 
-            var index = 0;
-            foreach (var item in _items)
-                items[index++] = item.Clone();
+            //var index = 0;
+            //foreach (var item in _items)
+            //    items[index++] = item.Clone();
 
-            return items;
+            //return items;
         }
 
         //Dynamically resizing array
