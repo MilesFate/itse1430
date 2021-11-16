@@ -21,7 +21,7 @@ namespace MovieLibrary
         /// Movie must be not null and valid.
         /// Movie title must be unique.
         /// </remarks>
-        Movie Add ( Movie movie, out string error );
+        Movie Add ( Movie movie );
 
         /// <summary>Deletes a movie.</summary>
         /// <param name="id">The ID of the movie.</param>
@@ -50,6 +50,6 @@ namespace MovieLibrary
         /// Movie must already exist.
         /// Id must be greater than zero.
         /// </remarks>
-        string Update ( int id, Movie movie );
+        void Update ( int id, Movie movie );
     }
 }
