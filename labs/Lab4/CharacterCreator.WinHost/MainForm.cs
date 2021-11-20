@@ -1,11 +1,15 @@
-﻿/*
- * ITSE 1430
- * Character Creator
- * 
- * Sample implementation.
- */
+﻿// Luisalberto Castaneda
+// ITSE 1430
+// 11/12/2021
+// AdventureGame Lab 4
+
 using System;
+using System.Linq;
 using System.Windows.Forms;
+
+using LuisalbertoCastaneda.AdventureGame;
+
+using LuisalbertoCastaned.AdventureGame;
 
 namespace CharacterCreator.WinHost
 {
@@ -19,12 +23,7 @@ namespace CharacterCreator.WinHost
         }
         #endregion
 
-        #region Event Handlers
-
-        private void HanldeExit ( object sender, EventArgs e )
-        {
-            Close();
-        }
+        #region Event Handlers        
 
         private void HandleNewCharacter ( object sender, EventArgs e )
         {
@@ -98,5 +97,95 @@ namespace CharacterCreator.WinHost
 
         private Character _character;
         #endregion
+
+        #region Game Related
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            UpdateUI();
+
+            _btnNorth.Enabled = false;
+            _btnSouth.Enabled = false;
+            _btnEast.Enabled = false;
+            _btnWest.Enabled = false;
+        }
+
+        private void HanldeExit ( object sender, EventArgs e )
+        {
+            if (!Confirm("Do you want to quit?", "Confirm"))
+                return;
+
+            Close();
+        }
+
+        private static bool Confirm ( string message, string title ) => MessageBox.Show(message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+
+        private World _playerSpace = new World();
+
+        private void UpdateQuest ()
+        {
+            var playerRoom = _playerSpace.GetAll();
+
+            playerRoom.ToArray();
+
+            var bindingsource = new BindingSource();
+            bindingsource.DataSource = playerRoom;
+
+            _lstArea.DataSource = bindingsource;
+        }
+
+        private void OnNewGame ( object sender, EventArgs e )
+        {
+            if (_character == null)
+            {
+                ErrorMessage("Error", "A character must be made before you can play the game.");
+                DialogResult = DialogResult.None;
+                return;
+            };
+
+            characterToolStripMenuItem.Enabled = false;
+            _btnNorth.Enabled = true;
+            _btnSouth.Enabled = true;
+            _btnEast.Enabled = true;
+            _btnWest.Enabled = true;
+
+
+            UpdateQuest();
+        }
+
+        private void ErrorMessage ( string title, string message ) => MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        
+
+        private void OnMoveNorth ( object sender, EventArgs e )
+        {
+            var player = new Player();
+
+            player.placeY += -1;
+        }
+
+        private void OnMoveSouth ( object sender, EventArgs e )
+        {
+            var player = new Player();
+
+            player.placeY += 1;
+        }
+
+        private void OnMoveEast ( object sender, EventArgs e )
+        {
+            var player = new Player();
+
+            player.placeX += 1;
+        }
+
+        private void OnMoveWest ( object sender, EventArgs e )
+        {
+            var player = new Player();
+
+            player.placeX += -1;
+        }
+
+        #endregion
+
     }
 }

@@ -1,9 +1,8 @@
-﻿/*
- * ITSE 1430
- * Character Creator
- * 
- * Sample implementation.
- */
+﻿// Luisalberto Castaneda
+// ITSE 1430
+// 11/12/2021
+// AdventureGame Lab 4
+
 using System;
 using System.Windows.Forms;
 

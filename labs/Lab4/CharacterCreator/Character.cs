@@ -1,9 +1,8 @@
-﻿/*
- * ITSE 1430
- * Character Creator
- * 
- * Sample implementation.
- */
+﻿// Luisalberto Castaneda
+// ITSE 1430
+// 11/12/2021
+// AdventureGame Lab 4
+
 using System;
 
 namespace CharacterCreator
@@ -17,6 +16,7 @@ namespace CharacterCreator
         /// <summary>Gets the minimum attribute value.</summary>
         public const int MinimumAttributeValue = 1;
 
+        #region Getters and Setters
         /// <summary>Gets or sets the name.</summary>
         public string Name
         {
@@ -51,6 +51,8 @@ namespace CharacterCreator
 
         /// <summary>Gets or sets the charisma.</summary>
         public int Charisma { get; set; }
+
+        #endregion
 
         public bool Validate ( out string errorMessage )
         {
@@ -104,12 +106,26 @@ namespace CharacterCreator
 
         #region Private Members
                 
-        private bool ValidateAttribute ( int value )
-        {
-            return (value >= MinimumAttributeValue) && (value <= MaximumAttributeValue);
-        }
+        private bool ValidateAttribute ( int value ) => (value >= MinimumAttributeValue) && (value <= MaximumAttributeValue);
+        
         
         private string _name, _bio;
         #endregion
+
+        public Character Recruit ()
+        {
+            var character = new Character();
+            character.Name = Name;
+            character.Profession = Profession;
+            character.Race = Race;
+            character.Biography = Biography;
+            character.Strength = Strength;
+            character.Intelligence = Intelligence;
+            character.Agility = Agility;
+            character.Constitution = Constitution;
+            character.Charisma = Charisma;
+
+            return character;
+        }
     }
 }

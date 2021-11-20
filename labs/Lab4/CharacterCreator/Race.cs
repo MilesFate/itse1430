@@ -1,9 +1,8 @@
-﻿/*
- * ITSE 1430
- * Character Creator
- * 
- * Sample implementation.
- */
+﻿// Luisalberto Castaneda
+// ITSE 1430
+// 11/12/2021
+// AdventureGame Lab 4
+
 using System;
 
 namespace CharacterCreator
@@ -11,17 +10,8 @@ namespace CharacterCreator
     /// <summary>Represents a race/species in the game.</summary>
     public class Race
     {
-        #region Construction
+        public Race ( string name ) => Name = name ?? "";        
 
-        /// <summary>Initializes an instance of the <see cref="Race"/> class.</summary>
-        /// <param name="name">The name of the race.</param>
-        public Race ( string name )
-        {
-            Name = name ?? "";
-        }
-        #endregion
-
-        /// <summary>Gets the race name.</summary>
         public string Name { get; }
     }
 }

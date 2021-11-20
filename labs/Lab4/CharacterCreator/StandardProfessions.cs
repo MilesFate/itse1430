@@ -1,9 +1,8 @@
-﻿/*
- * ITSE 1430
- * Character Creator
- * 
- * Sample implementation.
- */
+﻿// Luisalberto Castaneda
+// ITSE 1430
+// 11/12/2021
+// AdventureGame Lab 4
+
 using System;
 
 namespace CharacterCreator
@@ -12,10 +11,7 @@ namespace CharacterCreator
     public static class StandardProfessions
     {
         /// <summary>Gets the standard professions.</summary>
-        public static Profession[] Professions
-        {
-            get { return s_professions;  }
-        }
+        public static Profession[] Professions { get => s_professions; }
 
         /// <summary>Fighter</summary>
         public static Profession Sniper = new Profession("Sniper");
@@ -36,6 +32,7 @@ namespace CharacterCreator
         #region Private Members
 
         private static readonly Profession[] s_professions = new Profession[] { Sniper, Hunter, Assassin, Mage, Wizard };
+
         #endregion
     }
 }

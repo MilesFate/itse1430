@@ -1,9 +1,8 @@
-﻿/*
- * ITSE 1430
- * Character Creator
- * 
- * Sample implementation.
- */
+﻿// Luisalberto Castaneda
+// ITSE 1430
+// 11/12/2021
+// AdventureGame Lab 4
+
 using System;
 
 namespace CharacterCreator
@@ -12,10 +11,7 @@ namespace CharacterCreator
     public static class StandardRaces
     {
         /// <summary>Gets the standard races.</summary>
-        public static Race[] Races
-        {
-            get { return s_races; }
-        }
+        public static Race[] Races { get => s_races; }
 
         /// <summary>Dwarf</summary>
         public static Race Zeno = new Race("Zeno");
@@ -35,6 +31,7 @@ namespace CharacterCreator
         #region Private Members
 
         private static readonly Race[] s_races = new Race[] { Zeno, Human, Raccoon, Robot, Monster };
+
         #endregion
     }
 }
