@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using MovieLibrary.Memory;
+using MovieLibrary.Sql;
 
 namespace MovieLibrary.WinHost
 {
@@ -156,7 +157,7 @@ namespace MovieLibrary.WinHost
 
         #region Private Members
 
-        private IMovieDatabase _movies = new MemoryMovieDatabase();
+        private IMovieDatabase _movies = new SqlMovieDatabase(@"Data Source=(localdb)\ProjectsV13;Initial Catalog=MovieDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 
         /// <summary>Updates UI whenever something has changed.</summary>
         private void UpdateUI ( bool isFirstRun = false )
