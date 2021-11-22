@@ -14,8 +14,8 @@ namespace LuisalbertoCastaneda.AdventureGame
         {
             var roomCollection = new[] {
                 (new Area(){
-                    RoomName = "Introduction",
-                    RoomId = 0,
+                    RoomName    = "Introduction",
+                    RoomId      = 0,
                     Description = Introdution(),
                     NorthAccess = false,
                     SouthAccess = false,
@@ -23,10 +23,9 @@ namespace LuisalbertoCastaneda.AdventureGame
                     WestAccess = false
                 }),
 
-                // New coordinate (1,1)
                 (new Area() {
-                    RoomName = "Room1",
-                    RoomId = 1,
+                    RoomName    = "Room1",
+                    RoomId      = 1,
                     Description = Room1(),
                     NorthAccess = false,
                     SouthAccess = true,
@@ -34,10 +33,9 @@ namespace LuisalbertoCastaneda.AdventureGame
                     WestAccess  = false
                 }),
 
-                // New coordinate (2,1)
                 (new Area() {
-                    RoomName = "Room2",
-                    RoomId = 2,
+                    RoomName    = "Room2",
+                    RoomId      = 2,
                     Description = Room2(),
                     NorthAccess = false,
                     SouthAccess = true,
@@ -45,10 +43,9 @@ namespace LuisalbertoCastaneda.AdventureGame
                     WestAccess  = true
                 }),
 
-                // New coordinate (3,1)
                 (new Area() {
-                    RoomName = "Room3",
-                    RoomId = 3,
+                    RoomName    = "Room3",
+                    RoomId      = 3,
                     Description = Room3(),
                     NorthAccess = false,
                     SouthAccess = true,
@@ -56,10 +53,9 @@ namespace LuisalbertoCastaneda.AdventureGame
                     WestAccess  = true
                 }),
 
-                // New coordinate (1,2)
                 (new Area() {
-                    RoomName = "Room4",
-                    RoomId = 4,
+                    RoomName    = "Room4",
+                    RoomId      = 4,
                     Description = Room4(),
                     NorthAccess = true,
                     SouthAccess = true,
@@ -68,8 +64,8 @@ namespace LuisalbertoCastaneda.AdventureGame
                 }),
 
                 (new Area() {
-                    RoomName = "Room5",
-                    RoomId = 5,
+                    RoomName    = "Room5",
+                    RoomId      = 5,
                     Description = Room5(),
                     NorthAccess = true,
                     SouthAccess = true,
@@ -78,8 +74,8 @@ namespace LuisalbertoCastaneda.AdventureGame
                 }),
 
                 (new Area() {
-                    RoomName = "Room6",
-                    RoomId = 6,
+                    RoomName    = "Room6",
+                    RoomId      = 6,
                     Description = Room6(),
                     NorthAccess = true,
                     SouthAccess = true,
@@ -88,8 +84,8 @@ namespace LuisalbertoCastaneda.AdventureGame
                 }),
 
                 (new Area() {
-                    RoomName = "Room7",
-                    RoomId = 7,
+                    RoomName    = "Room7",
+                    RoomId      = 7,
                     Description = Room7(),
                     NorthAccess = true,
                     SouthAccess = false,
@@ -98,8 +94,8 @@ namespace LuisalbertoCastaneda.AdventureGame
                 }),
 
                 (new Area() {
-                    RoomName = "Room8",
-                    RoomId = 8,
+                    RoomName    = "Room8",
+                    RoomId      = 8,
                     Description = Room8(),
                     NorthAccess = true,
                     SouthAccess = false,
@@ -108,8 +104,8 @@ namespace LuisalbertoCastaneda.AdventureGame
                 }),
 
                 (new Area() {
-                    RoomName = "Room9",
-                    RoomId = 9,
+                    RoomName    = "Room9",
+                    RoomId      = 9,
                     Description = Room9(),
                     NorthAccess = true,
                     SouthAccess = false,
@@ -123,6 +119,7 @@ namespace LuisalbertoCastaneda.AdventureGame
 
         private List<Area> _rooms = new List<Area>();
 
+        #region Rooms
         public static string Introdution ()
         {
             return  "ITSE 1430, Luisalberto Castaneda, Adventure Game, Fall 2020\n " +
@@ -211,28 +208,14 @@ namespace LuisalbertoCastaneda.AdventureGame
                     "It's as if time and space have both stop existing the way you have come to understand them. \n" +
                     "After regaining your composure after what was the greatest shift a body can have, you notice a man leaning against the wall. \n" +
                     "Approaching the man he smiles and says \"What's up broski, I'm Vlad and this is my time!\", you awkwardly wave and look for an exit. \n";
-        } 
-
-        private Area FindRoomId ( int id )
-        {
-            foreach (var room in _rooms)
-            {
-                if (room.RoomId == id)
-                    return room;
-            }
-            return null;
         }
 
-        public Area Get ( int id )
-        {
-            var room = FindRoomId(id);
-            return room?.Renovate();
-        }
+        #endregion     
 
         public IEnumerable<Area> GetAll ()
         {
             foreach (var room in _rooms)
-                yield return room.Renovate();
+                yield return room.RoomsDef();
         }
     }
 }

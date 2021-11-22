@@ -14,7 +14,7 @@ namespace LuisalbertoCastaneda.AdventureGame
 
         public Item Add ( Item item, out string error )
         {
-            error = item.ItemValidator();
+            error = item.Validator();
             if (!String.IsNullOrEmpty(error))
                 return null;
 

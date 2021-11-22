@@ -9,6 +9,7 @@ namespace LuisalbertoCastaneda.AdventureGame
 {
     public class Area
     {
+        #region Getters and Setters
         public string RoomName
         {
             get => _roomName ?? ""; 
@@ -21,16 +22,19 @@ namespace LuisalbertoCastaneda.AdventureGame
             set => _description = (value != null) ? value.Trim() : null; 
         }
 
+        
         public int RoomId { get; set; }
         public bool NorthAccess { get; set; }
         public bool SouthAccess { get; set; }
         public bool EastAccess { get; set; }
         public bool WestAccess { get; set; }
 
+        #endregion
+
         private string _roomName;
         private string _description;
 
-        public Area Renovate ()
+        public Area RoomsDef ()
         {
             var room = new Area();
 
@@ -42,9 +46,6 @@ namespace LuisalbertoCastaneda.AdventureGame
             room.WestAccess = WestAccess;
 
             return room;
-        }
-        
-        public override string ToString () => $"{RoomName}\n {Description}";
-        
+        }       
     }
 }

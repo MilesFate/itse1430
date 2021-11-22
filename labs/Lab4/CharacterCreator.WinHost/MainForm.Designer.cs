@@ -60,7 +60,7 @@
             this.newGameToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1195, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(704, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -252,7 +252,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1195, 537);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(704, 387);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // _lstCharacters
@@ -261,9 +261,9 @@
             this._lstCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
             this._lstCharacters.FormattingEnabled = true;
             this._lstCharacters.ItemHeight = 15;
-            this._lstCharacters.Location = new System.Drawing.Point(3, 367);
+            this._lstCharacters.Location = new System.Drawing.Point(3, 265);
             this._lstCharacters.Name = "_lstCharacters";
-            this._lstCharacters.Size = new System.Drawing.Size(1189, 167);
+            this._lstCharacters.Size = new System.Drawing.Size(698, 119);
             this._lstCharacters.TabIndex = 0;
             // 
             // _lstArea
@@ -275,7 +275,7 @@
             this._lstArea.ItemHeight = 15;
             this._lstArea.Location = new System.Drawing.Point(3, 3);
             this._lstArea.Name = "_lstArea";
-            this._lstArea.Size = new System.Drawing.Size(742, 349);
+            this._lstArea.Size = new System.Drawing.Size(434, 244);
             this._lstArea.TabIndex = 1;
             // 
             // groupBox1
@@ -285,16 +285,16 @@
             this.groupBox1.Controls.Add(this._btnEast);
             this.groupBox1.Controls.Add(this._btnWest);
             this.groupBox1.Controls.Add(this._btnNorth);
-            this.groupBox1.Location = new System.Drawing.Point(754, 3);
+            this.groupBox1.Location = new System.Drawing.Point(443, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(438, 358);
+            this.groupBox1.Size = new System.Drawing.Size(258, 256);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Player Controls";
             // 
             // _btnSouth
             // 
-            this._btnSouth.Location = new System.Drawing.Point(172, 192);
+            this._btnSouth.Location = new System.Drawing.Point(81, 134);
             this._btnSouth.Name = "_btnSouth";
             this._btnSouth.Size = new System.Drawing.Size(75, 23);
             this._btnSouth.TabIndex = 3;
@@ -303,7 +303,7 @@
             // 
             // _btnEast
             // 
-            this._btnEast.Location = new System.Drawing.Point(246, 127);
+            this._btnEast.Location = new System.Drawing.Point(164, 105);
             this._btnEast.Name = "_btnEast";
             this._btnEast.Size = new System.Drawing.Size(75, 23);
             this._btnEast.TabIndex = 2;
@@ -312,7 +312,7 @@
             // 
             // _btnWest
             // 
-            this._btnWest.Location = new System.Drawing.Point(90, 127);
+            this._btnWest.Location = new System.Drawing.Point(5, 105);
             this._btnWest.Name = "_btnWest";
             this._btnWest.Size = new System.Drawing.Size(75, 23);
             this._btnWest.TabIndex = 1;
@@ -321,7 +321,7 @@
             // 
             // _btnNorth
             // 
-            this._btnNorth.Location = new System.Drawing.Point(172, 59);
+            this._btnNorth.Location = new System.Drawing.Point(81, 76);
             this._btnNorth.Name = "_btnNorth";
             this._btnNorth.Size = new System.Drawing.Size(75, 23);
             this._btnNorth.TabIndex = 0;
@@ -333,12 +333,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1195, 561);
+            this.ClientSize = new System.Drawing.Size(704, 411);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(1211, 600);
-            this.MinimumSize = new System.Drawing.Size(1100, 500);
+            this.MaximumSize = new System.Drawing.Size(720, 450);
+            this.MinimumSize = new System.Drawing.Size(700, 400);
             this.Name = "MainForm";
             this.Text = "MitchelCampozano Adventure";
             this.menuStrip1.ResumeLayout(false);

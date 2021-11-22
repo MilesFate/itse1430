@@ -35,7 +35,7 @@ namespace LuisalbertoCastaneda.AdventureGame
             return item;
         }
 
-        public string ItemValidator ()
+        public string Validator ()
         {
             if (String.IsNullOrEmpty(ItemName))
                 return "Item must have a name";

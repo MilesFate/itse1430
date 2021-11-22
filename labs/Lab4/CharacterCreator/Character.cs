@@ -112,7 +112,7 @@ namespace CharacterCreator
         private string _name, _bio;
         #endregion
 
-        public Character Recruit ()
+        public Character repPlayer ()
         {
             var character = new Character();
             character.Name = Name;

@@ -31,8 +31,6 @@ namespace CharacterCreator.WinHost
 
             if (form.ShowDialog(this) == DialogResult.Cancel)
                 return;
-
-            //Add the character
             _character = form.SelectedCharacter;
             UpdateUI();
         }
@@ -75,7 +73,6 @@ namespace CharacterCreator.WinHost
 
         #region Private Members
 
-        // Gets the selected character, if any
         private Character GetSelectedCharacter ()
         {
             return _character;
@@ -99,17 +96,7 @@ namespace CharacterCreator.WinHost
         #endregion
 
         #region Game Related
-        protected override void OnLoad ( EventArgs e )
-        {
-            base.OnLoad(e);
-
-            UpdateUI();
-
-            _btnNorth.Enabled = false;
-            _btnSouth.Enabled = false;
-            _btnEast.Enabled = false;
-            _btnWest.Enabled = false;
-        }
+       
 
         private void HanldeExit ( object sender, EventArgs e )
         {
@@ -150,7 +137,6 @@ namespace CharacterCreator.WinHost
             _btnEast.Enabled = true;
             _btnWest.Enabled = true;
 
-
             UpdateQuest();
         }
 
@@ -162,30 +148,8 @@ namespace CharacterCreator.WinHost
             var player = new Player();
 
             player.placeY += -1;
-        }
-
-        private void OnMoveSouth ( object sender, EventArgs e )
-        {
-            var player = new Player();
-
-            player.placeY += 1;
-        }
-
-        private void OnMoveEast ( object sender, EventArgs e )
-        {
-            var player = new Player();
-
-            player.placeX += 1;
-        }
-
-        private void OnMoveWest ( object sender, EventArgs e )
-        {
-            var player = new Player();
-
-            player.placeX += -1;
-        }
+        }       
 
         #endregion
-
     }
 }
