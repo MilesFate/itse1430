@@ -108,16 +108,9 @@ namespace CharacterCreator.WinHost
 
         private static bool Confirm ( string message, string title ) => MessageBox.Show(message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
 
-        private World _playerSpace = new World();
-
         private void UpdateQuest ()
-        {
-            var playerRoom = _playerSpace.GetAll();
-
-            playerRoom.ToArray();
-
-            var bindingsource = new BindingSource();
-            bindingsource.DataSource = playerRoom;
+        {          
+            var bindingsource = new BindingSource();           
 
             _lstArea.DataSource = bindingsource;
         }
