@@ -110,8 +110,11 @@ namespace CharacterCreator
         
         
         private string _name, _bio;
+
         #endregion
 
+        /// <summary>Represent the player attributes</summary>
+        /// <returns>Returns character</returns>
         public Character repPlayer ()
         {
             var character = new Character();

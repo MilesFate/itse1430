@@ -10,7 +10,6 @@ namespace LuisalbertoCastaneda.AdventureGame
 {
     class Item
     {
-        #region Test
 
         private List<Item> _items = new List<Item>();
 
@@ -28,9 +27,7 @@ namespace LuisalbertoCastaneda.AdventureGame
             }
 
             var newItem = item.Creation();
-
             item.ItemId = newItem.ItemId;
-
             _items.Add(newItem);
 
             return item;
@@ -70,8 +67,6 @@ namespace LuisalbertoCastaneda.AdventureGame
             foreach (var item in _items)
                 yield return item.Creation();
         }
-
-        #endregion
 
         #region Getters and Setters
 

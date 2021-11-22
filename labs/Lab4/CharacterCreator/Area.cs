@@ -24,10 +24,10 @@ namespace LuisalbertoCastaneda.AdventureGame
 
         
         public int RoomId { get; set; }
-        public bool NorthAccess { get; set; }
-        public bool SouthAccess { get; set; }
-        public bool EastAccess { get; set; }
-        public bool WestAccess { get; set; }
+        public bool NorthAvalable { get; set; }
+        public bool SouthAvalable { get; set; }
+        public bool EastAvalable { get; set; }
+        public bool WestAvalable { get; set; }
 
         #endregion
 
@@ -40,10 +40,10 @@ namespace LuisalbertoCastaneda.AdventureGame
 
             room.RoomName = RoomName;
             room.Description = Description;
-            room.NorthAccess = NorthAccess;
-            room.SouthAccess = SouthAccess;
-            room.EastAccess = EastAccess;
-            room.WestAccess = WestAccess;
+            room.NorthAvalable = NorthAvalable;
+            room.SouthAvalable = SouthAvalable;
+            room.EastAvalable = EastAvalable;
+            room.WestAvalable = WestAvalable;
 
             return room;
         }       
