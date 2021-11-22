@@ -16,7 +16,7 @@ namespace LuisalbertoCastaned.AdventureGame
         public Player ()
         {
             var playerChatacer = new Character()?.repPlayer();
-            var playerInventory = new Inventory();
+            var playerInventory = new Item();
         }
 
         public int placeX { get; set; }

@@ -10,7 +10,7 @@ namespace CharacterCreator
     /// <summary>Represents a race/species in the game.</summary>
     public class Race
     {
-        public Race ( string name ) => Name = name ?? "";        
+        public Race ( string name ) => Name = name ?? "";
 
         public string Name { get; }
     }

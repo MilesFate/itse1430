@@ -9,9 +9,9 @@ namespace CharacterCreator
 {
     /// <summary>Represents a profession/career in the game.</summary>
     public class Profession
-    {       
+    {
         public Profession ( string name ) => Name = name ?? "";
-        
+
         public string Name { get; }
     }
 }
