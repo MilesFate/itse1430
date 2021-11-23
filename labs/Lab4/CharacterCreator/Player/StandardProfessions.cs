@@ -5,7 +5,7 @@
 
 using System;
 
-namespace CharacterCreator
+namespace CharacterCreator.Player
 {
     /// <summary>Provides access to the standard professions.</summary>
     public static class StandardProfessions

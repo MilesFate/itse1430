@@ -5,7 +5,7 @@
 
 using System;
 
-namespace CharacterCreator
+namespace CharacterCreator.Player
 {
     /// <summary>Represents a profession/career in the game.</summary>
     public class Profession

@@ -5,7 +5,7 @@
 
 using System;
 
-namespace CharacterCreator
+namespace CharacterCreator.Player
 {
     /// <summary>Provides access to the standard races.</summary>
     public static class StandardRaces

@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LuisalbertoCastaneda.AdventureGame
+namespace LuisalbertoCastaneda.AdventureGame.World
 {
     class Item
     {

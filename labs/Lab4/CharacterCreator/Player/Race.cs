@@ -5,7 +5,7 @@
 
 using System;
 
-namespace CharacterCreator
+namespace CharacterCreator.Player
 {
     /// <summary>Represents a race/species in the game.</summary>
     public class Race

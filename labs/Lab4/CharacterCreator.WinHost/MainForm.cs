@@ -6,10 +6,7 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
-
-using LuisalbertoCastaneda.AdventureGame;
-
-using LuisalbertoCastaned.AdventureGame;
+using CharacterCreator.Player;
 
 namespace CharacterCreator.WinHost
 {
@@ -138,7 +135,7 @@ namespace CharacterCreator.WinHost
 
         private void OnMoveNorth ( object sender, EventArgs e )
         {
-            var player = new Player();
+            var player = new _Player();
 
             player.placeY += -1;
         }       

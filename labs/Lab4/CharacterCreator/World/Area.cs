@@ -5,7 +5,7 @@
 
 using System;
 
-namespace LuisalbertoCastaneda.AdventureGame
+namespace LuisalbertoCastaneda.AdventureGame.World
 {
     public class Area
     {

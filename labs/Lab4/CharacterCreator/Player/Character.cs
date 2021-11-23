@@ -5,7 +5,7 @@
 
 using System;
 
-namespace CharacterCreator
+namespace CharacterCreator.Player
 {
     /// <summary>Represents a character.</summary>
     public class Character

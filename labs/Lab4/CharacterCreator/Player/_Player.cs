@@ -5,15 +5,13 @@
 
 using System;
 
-using CharacterCreator;
+using LuisalbertoCastaneda.AdventureGame.World;
 
-using LuisalbertoCastaneda.AdventureGame;
-
-namespace LuisalbertoCastaned.AdventureGame
+namespace CharacterCreator.Player
 {
-    public class Player
+    public class _Player
     {
-        public Player ()
+        public _Player ()
         {
             var playerChatacer = new Character()?.repPlayer();
             var playerInventory = new Item();

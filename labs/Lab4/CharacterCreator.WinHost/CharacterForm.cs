@@ -6,6 +6,8 @@
 using System;
 using System.Windows.Forms;
 
+using CharacterCreator.Player;
+
 namespace CharacterCreator.WinHost
 {
     /// <summary>Provides a UI for creating a character.</summary>
