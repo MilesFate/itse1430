@@ -9,9 +9,9 @@ using LuisalbertoCastaneda.AdventureGame.World;
 
 namespace CharacterCreator.Player
 {
-    public class _Player
+    public class RepresentPlayer
     {
-        public _Player ()
+        public RepresentPlayer ()
         {
             var playerChatacer = new Character()?.repPlayer();
             var playerInventory = new Item();

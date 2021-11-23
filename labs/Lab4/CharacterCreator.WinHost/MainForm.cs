@@ -135,7 +135,7 @@ namespace CharacterCreator.WinHost
 
         private void OnMoveNorth ( object sender, EventArgs e )
         {
-            var player = new _Player();
+            var player = new RepresentPlayer();
 
             player.placeY += -1;
         }       
