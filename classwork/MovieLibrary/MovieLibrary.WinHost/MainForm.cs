@@ -71,27 +71,26 @@ namespace MovieLibrary.WinHost
                 try
                 {
                     _movies.Add(dlg.Movie);
+                    UpdateUI();
                     return;
                 } catch (ArgumentException ex)
                 {
-                    DisplayError(ex.Message, " Failed");
+                    DisplayError(ex.Message, "Programmer Error");
                 } catch (InvalidOperationException ex)
                 {
-                    DisplayError(ex.Message, " Failed");
+                    DisplayError(ex.Message, "Not Now");
                 } catch (NotSupportedException ex)
                 {
-                    DisplayError(ex.Message, "Failed");
-                    // Do some Logging
+                    DisplayError("Not supported", "Error");
+                    //Do some logging
                     throw;
                 } catch (System.IO.IOException ex)
                 {
-                    throw new Exception("IO Failed",ex);
+                    throw new Exception("IO failed", ex);
                 } catch (Exception ex)
                 {
                     DisplayError(ex.Message, "Failed");
                 };
-
-                UpdateUI();
             } while (true);
         }
 
@@ -109,6 +108,7 @@ namespace MovieLibrary.WinHost
 
             var dlg = new MovieForm();
             dlg.Movie = movie;
+
             do
             {
                 //ShowDialog -> DialogResult
@@ -135,7 +135,7 @@ namespace MovieLibrary.WinHost
         //Called when Movie\Delete is selected
         private void OnMovieDelete ( object sender, EventArgs e )
         {
-            //_movies.IsOnlyHere();
+            //_movies.IsOnlyAvailableInMemoryMovieDatabase();
             var movie = GetSelectedMovie();
             if (movie == null)
                 return;
@@ -170,19 +170,30 @@ namespace MovieLibrary.WinHost
             {
                 if (Confirm("Do you want to seed the database", "Seed"))
                 {
+                    //using extension method instead of static method
                     _movies.Seed();
-                    //SeedDataBase.Seed(_movies);
+                    //SeedDatabase.Seed(_movies);
                     movies = _movies.GetAll();
-                    var firstMovie = movies.FirstOrDefault();
-                }
-            }
 
+                    var firstMovie = movies.FirstOrDefault();
+                };
+            };
+
+            //LINQ extension
+            //movies = movies.OrderBy(x => x.Title)
+            //               .ThenBy(x => x.ReleaseYear);
+
+            //LINQ syntax
             movies = from x in movies
                      orderby x.Title, x.ReleaseYear
                      select x;
+
             var bindingSource = new BindingSource();
-            //bindingSource.DataSource = movies.OrderBy(x => x.Title).ThenBy(x => x.ReleaseYear).ToArray();
-            
+            //bindingSource.DataSource = movies
+            //                            .OrderBy(x => x.Title)
+            //                            .ThenBy(x => x.ReleaseYear)
+            //                            .ToArray();
+            bindingSource.DataSource = movies.ToArray();
 
             //bind the movies to the listbox
             _listMovies.DataSource = bindingSource;
