@@ -1,4 +1,9 @@
-﻿using System;
+﻿// Luisalberto Castaneda
+// ITSE 1430
+// 11/12/2021
+// AdventureGame Lab 4
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

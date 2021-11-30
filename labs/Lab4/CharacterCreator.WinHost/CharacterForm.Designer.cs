@@ -142,7 +142,7 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Size = new System.Drawing.Size(195, 189);
-            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Attributes";
             // 
@@ -302,7 +302,7 @@
             this._txtBiography.Multiline = true;
             this._txtBiography.Name = "_txtBiography";
             this._txtBiography.Size = new System.Drawing.Size(344, 288);
-            this._txtBiography.TabIndex = 3;
+            this._txtBiography.TabIndex = 5;
             // 
             // label4
             // 
@@ -324,7 +324,7 @@
             this._btnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this._btnCancel.Name = "_btnCancel";
             this._btnCancel.Size = new System.Drawing.Size(88, 27);
-            this._btnCancel.TabIndex = 5;
+            this._btnCancel.TabIndex = 6;
             this._btnCancel.Text = "Cancel";
             this._btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -335,7 +335,7 @@
             this._btnSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this._btnSave.Name = "_btnSave";
             this._btnSave.Size = new System.Drawing.Size(88, 27);
-            this._btnSave.TabIndex = 4;
+            this._btnSave.TabIndex = 5;
             this._btnSave.Text = "Save";
             this._btnSave.UseVisualStyleBackColor = true;
             this._btnSave.Click += new System.EventHandler(this.OnSave);

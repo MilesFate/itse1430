@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuisalbertoCastaneda.CharacterCreator", "CharacterCreator\LuisalbertoCastaneda.CharacterCreator.csproj", "{DD46BB51-1B48-487F-90B6-5DE95F5586E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuisalbertoCastaneda.CharacterCreator.WinHost", "CharacterCreator.WinHost\LuisalbertoCastaneda.CharacterCreator.WinHost.csproj", "{AA1091A1-30FB-47D9-959D-E62F62A7B648}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuisalbertoCastaneda.AdventureGames.WinHost", "CharacterCreator.WinHost\LuisalbertoCastaneda.AdventureGames.WinHost.csproj", "{AA1091A1-30FB-47D9-959D-E62F62A7B648}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
