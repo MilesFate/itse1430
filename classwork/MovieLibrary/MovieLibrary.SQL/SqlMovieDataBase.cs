@@ -8,12 +8,11 @@ namespace MovieLibrary.Sql
 {
     public class SqlMovieDatabase : MovieDatabase
     {
+        private readonly string _connectionString;
         public SqlMovieDatabase ( string connectionString )
         {
             _connectionString = connectionString;
-        }
-
-        private readonly string _connectionString;
+        }        
         protected override Movie AddCore ( Movie movie )
         {
             using(var conn = OpenConnection()) 
@@ -97,8 +96,8 @@ namespace MovieLibrary.Sql
         }
         protected override IEnumerable<Movie> GetAllCore ()
         {
-            //Datasets are in memory representations of databases
-            //Buffered so DB isn't needed once loaded
+            //  Datasets are in memory representations of databases
+            //  Buffered so DB isn't needed once loaded
             var ds = new DataSet();
 
             using (var conn = OpenConnection())
@@ -106,34 +105,34 @@ namespace MovieLibrary.Sql
                 var cmd = new SqlCommand("GetMovies", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                //Load the data, connection must be open
-                // 1. must create adapter and associate with command
-                // 2. Must create Dataset
-                // 3. Call Fill on adapter
+                //  Load the data, connection must be open
+                //     1. must create adapter and associate with command
+                //     2. Must create Dataset
+                //     3. Call Fill on adapter
                 var adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(ds);
             };
 
-            //Enumerate results
-            // 1. Find the table
-            // 2. Enumerate the rows
-            // 3. Extract the data by ordinal or name
-            // Have to use OfType<T> to convert from IEnumerable that dataset uses
+            //  Enumerate results
+            //      1. Find the table
+            //      2. Enumerate the rows
+            //      3. Extract the data by ordinal or name
+            //      Have to use OfType<T> to convert from IEnumerable that dataset uses
             var table = ds.Tables.OfType<DataTable>().FirstOrDefault();
             if (table != null)
             {
-                //foreach (DataRow row in table.Rows)
+                //  foreach (DataRow row in table.Rows)
                 foreach (var row in table.Rows.OfType<DataRow>())
                 {
-                    //Ordinal vs Name
-                    //  Ordinal - faster but tied to order of query
-                    //  Name - cleaner but slower
+                    //  Ordinal vs Name
+                    //      Ordinal - faster but tied to order of query
+                    //      Name - cleaner but slower
                     yield return new Movie() {
-                        Id = Convert.ToInt32(row[0]),  //Ordinal and indexing
-                        Title = Convert.ToString(row["Name"]),  //Name and indexing
+                        Id = Convert.ToInt32(row[0]),  //   Ordinal and indexing
+                        Title = Convert.ToString(row["Name"]),  //  Name and indexing
 
-                        Description = row.IsNull(2) ? "" : row.Field<string>(2),  //Ordinal and generic
-                        Rating = row.Field<string>("Rating"), //Name and generic
+                        Description = row.IsNull(2) ? "" : row.Field<string>(2),  //    Ordinal and generic
+                        Rating = row.Field<string>("Rating"), //    Name and generic
 
                         ReleaseYear = row.Field<int>("ReleaseYear"),
                         RunLength = row.Field<int>("RunLength"),
@@ -142,7 +141,6 @@ namespace MovieLibrary.Sql
                 };
             };
         }
-
         protected override Movie GetCore ( int id )
         {
             using (var conn = OpenConnection())
@@ -206,7 +204,6 @@ namespace MovieLibrary.Sql
                 movie.Id = Convert.ToInt32(result);
             };
         }
-
         private SqlConnection OpenConnection ()
         {            
             var conn = new SqlConnection(_connectionString);

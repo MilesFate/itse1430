@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 
 namespace MovieLibrary.Memory
@@ -48,7 +49,14 @@ namespace MovieLibrary.Memory
             movie.Id = newMovie.Id;
             return movie;
         }
+        
+        //[Conditional("DEBUG")]
+        //private void dump ()
+        //{
 
+        //}
+
+        [Obsolete("Use GetCore instead")]
         private Movie FindByTitle ( string title )
         {
             return _items.FirstOrDefault(movie => String.Compare(title, movie.Title, true) == 0);
