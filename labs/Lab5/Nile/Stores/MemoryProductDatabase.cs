@@ -1,4 +1,6 @@
-/*
+ /*
+ * Luisalberto Castaneda
+ * 12/07/2021
  * ITSE 1430
  */
 using System;
@@ -89,6 +91,8 @@ namespace Nile.Stores
 
             return null;
         }
+
+        protected override Product FindByName ( string name ) => throw new NotImplementedException();
 
         private List<Product> _products = new List<Product>();
         private int _nextId = 1;
