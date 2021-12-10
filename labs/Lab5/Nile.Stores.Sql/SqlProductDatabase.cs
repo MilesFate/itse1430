@@ -12,7 +12,6 @@ using System.Linq;
 
 namespace Nile.Stores.Sql
 {
-    /// <summary>Prodvides a SQL Server implementaion of <see cref="IProductDatabase"/>.</summary>
     public class SqlProductDatabase : ProductDatabase
     {
         private readonly string _connectionString;
@@ -69,7 +68,7 @@ namespace Nile.Stores.Sql
             using (var conn = OpenConnection())
             {
                 var cmd = new SqlCommand("GetAllProducts", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
 
                 var adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dataSet);
@@ -96,36 +95,35 @@ namespace Nile.Stores.Sql
             using (var conn = OpenConnection())
             {
                 var cmd = new SqlCommand("AddProduct", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@name", product.Name);
                 cmd.Parameters.AddWithValue("@price", product.Price);
                 cmd.Parameters.AddWithValue("@description", product.Description);
                 cmd.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
 
-                //Get movie ID as result
                 object result = cmd.ExecuteScalar();
                 product.Id = Convert.ToInt32(result);
             }
             return product;
         }
 
-        protected override Product UpdateCore ( Product existing, Product newItem )
+        protected override Product UpdateCore ( Product existing, Product product )
         {
             using (var conn = OpenConnection())
             {
                 var cmd = new SqlCommand("UpdateProduct", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@id", existing.Id);
-                cmd.Parameters.AddWithValue("@name", newItem.Name);
-                cmd.Parameters.AddWithValue("@price", newItem.Price);
-                cmd.Parameters.AddWithValue("@description", newItem.Description);
-                cmd.Parameters.AddWithValue("@isDiscontinued", newItem.IsDiscontinued);
+                cmd.Parameters.AddWithValue("@name", product.Name);
+                cmd.Parameters.AddWithValue("@price", product.Price);
+                cmd.Parameters.AddWithValue("@description", product.Description);
+                cmd.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
 
                 cmd.ExecuteNonQuery();
             }
-            return newItem;
+            return product;
         }
       
         protected override void DeleteCore ( int id )
@@ -136,7 +134,6 @@ namespace Nile.Stores.Sql
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@id", id);
-
                 cmd.ExecuteNonQuery();
             }
         }

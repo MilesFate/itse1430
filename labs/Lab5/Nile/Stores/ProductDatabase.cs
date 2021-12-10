@@ -47,7 +47,7 @@ namespace Nile.Stores
         
         /// <summary>Removes the product.</summary>
         /// <param name="id">The product to remove.</param>
-        public void Remove ( int id )
+        public void Delete ( int id )
         {
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");

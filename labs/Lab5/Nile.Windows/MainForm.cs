@@ -134,7 +134,7 @@ namespace Nile.Windows
 
             try
             {
-                _database.Remove(product.Id);
+                _database.Delete(product.Id);
                 UpdateList();
             } catch (Exception ex)
             {
