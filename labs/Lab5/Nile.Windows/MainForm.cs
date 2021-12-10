@@ -1,211 +1,192 @@
- /*
- * Luisalberto Castaneda
- * 12/07/2021
- * ITSE 1430
- */
+/*
+* Luisalberto Castaneda
+* 12/07/2021
+* ITSE 1430
+*/
 using System;
+using System.Linq;
 using System.Windows.Forms;
+
 using Microsoft.Extensions.Configuration;
+
+using Nile.Stores.Sql;
 
 namespace Nile.Windows
 {
-    partial class MainForm
+    public partial class MainForm : Form
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        #region Construction
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose( bool disposing )
+        public MainForm ()
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            InitializeComponent();
+            _database = new SqlProductDatabase(GetConnectionString("ProductDatabase"));
+        }
+        #endregion
+
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            _gridProducts.AutoGenerateColumns = false;
+
+            UpdateList();
         }
 
-        #region Windows Form Designer generated code
+        #region Event Handlers
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+        private void OnFileExit ( object sender, EventArgs e )
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this._mainMenu = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._miFileExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.productToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._miProductAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this._miProductEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this._miProductDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this._gridProducts = new System.Windows.Forms.DataGridView();
-            this._bsProducts = new System.Windows.Forms.BindingSource(this.components);
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._mainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._gridProducts)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._bsProducts)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // _mainMenu
-            // 
-            this._mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.productToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this._mainMenu.Location = new System.Drawing.Point(0, 0);
-            this._mainMenu.Name = "_mainMenu";
-            this._mainMenu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this._mainMenu.Size = new System.Drawing.Size(965, 24);
-            this._mainMenu.TabIndex = 0;
-            this._mainMenu.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._miFileExit});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // _miFileExit
-            // 
-            this._miFileExit.Name = "_miFileExit";
-            this._miFileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this._miFileExit.Size = new System.Drawing.Size(180, 22);
-            this._miFileExit.Text = "E&xit";
-            this._miFileExit.Click += new System.EventHandler(this.OnFileExit);
-            // 
-            // productToolStripMenuItem
-            // 
-            this.productToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._miProductAdd,
-            this._miProductEdit,
-            this.toolStripSeparator1,
-            this._miProductDelete});
-            this.productToolStripMenuItem.Name = "productToolStripMenuItem";
-            this.productToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.productToolStripMenuItem.Text = "&Product";
-            // 
-            // _miProductAdd
-            // 
-            this._miProductAdd.Name = "_miProductAdd";
-            this._miProductAdd.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this._miProductAdd.Size = new System.Drawing.Size(180, 22);
-            this._miProductAdd.Text = "&Add";
-            this._miProductAdd.Click += new System.EventHandler(this.OnProductAdd);
-            // 
-            // _miProductEdit
-            // 
-            this._miProductEdit.Name = "_miProductEdit";
-            this._miProductEdit.Size = new System.Drawing.Size(180, 22);
-            this._miProductEdit.Text = "&Edit";
-            this._miProductEdit.Click += new System.EventHandler(this.OnProductEdit);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
-            // 
-            // _miProductDelete
-            // 
-            this._miProductDelete.Name = "_miProductDelete";
-            this._miProductDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this._miProductDelete.Size = new System.Drawing.Size(180, 22);
-            this._miProductDelete.Text = "&Delete";
-            this._miProductDelete.Click += new System.EventHandler(this.OnProductDelete);
-            // 
-            // _gridProducts
-            // 
-            this._gridProducts.AllowUserToAddRows = false;
-            this._gridProducts.AllowUserToDeleteRows = false;
-            this._gridProducts.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this._gridProducts.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
-            this._gridProducts.AutoGenerateColumns = false;
-            this._gridProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._gridProducts.DataSource = this._bsProducts;
-            this._gridProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._gridProducts.Location = new System.Drawing.Point(0, 24);
-            this._gridProducts.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this._gridProducts.Name = "_gridProducts";
-            this._gridProducts.ReadOnly = true;
-            this._gridProducts.RowHeadersVisible = false;
-            this._gridProducts.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this._gridProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this._gridProducts.Size = new System.Drawing.Size(965, 412);
-            this._gridProducts.TabIndex = 1;
-            this._gridProducts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnEditRow);
-            this._gridProducts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDownGrid);
-            // 
-            // _bsProducts
-            // 
-            this._bsProducts.AllowNew = false;
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.OnHelpAbout);
-            // 
-            // MainForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(965, 436);
-            this.Controls.Add(this._gridProducts);
-            this.Controls.Add(this._mainMenu);
-            this.MainMenuStrip = this._mainMenu;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.MaximizeBox = false;
-            this.Name = "MainForm";
-            this.Text = "Nile";
-            this._mainMenu.ResumeLayout(false);
-            this._mainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._gridProducts)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this._bsProducts)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            Close();
+        }
 
+        private void OnProductAdd ( object sender, EventArgs e )
+        {
+            var child = new ProductDetailForm("Product Details");
+
+            do
+            {
+                if (child.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                try
+                {
+                    _database.Add(child.Product);
+                    UpdateList();
+                    return;
+                } catch (Exception ex)
+                {
+                    DisplayError(ex.Message, "Add Failed");
+                }
+            } while (true);
+        }
+
+        private void OnProductEdit ( object sender, EventArgs e )
+        {
+            var product = GetSelectedProduct();
+            if (product == null)
+            {
+                MessageBox.Show("No products available.");
+                return;
+            };
+
+            EditProduct(product);
+        }
+
+        private void OnProductDelete ( object sender, EventArgs e )
+        {
+            var product = GetSelectedProduct();
+            if (product == null)
+                return;
+
+            DeleteProduct(product);
+        }
+
+        private void OnEditRow ( object sender, DataGridViewCellEventArgs e )
+        {
+            var grid = sender as DataGridView;
+
+            //Handle column clicks
+            if (e.RowIndex < 0)
+                return;
+
+            var row = grid.Rows[e.RowIndex];
+            var item = row.DataBoundItem as Product;
+
+            if (item != null)
+                EditProduct(item);
+        }
+
+        private void OnKeyDownGrid ( object sender, KeyEventArgs e )
+        {
+            if (e.KeyCode != Keys.Delete)
+                return;
+
+            var product = GetSelectedProduct();
+            if (product != null)
+                DeleteProduct(product);
+
+            //Don't continue with key
+            e.SuppressKeyPress = true;
+        }
+
+        private void OnHelpAbout ( object sender, EventArgs e )
+        {
+            var child = new AboutForm();
+
+            child.ShowDialog();
+        }
+
+        private void DisplayError ( string message, string title )
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip _mainMenu;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem _miFileExit;
-        private System.Windows.Forms.ToolStripMenuItem productToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem _miProductAdd;
-        private System.Windows.Forms.ToolStripMenuItem _miProductEdit;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem _miProductDelete;
-        private System.Windows.Forms.DataGridView _gridProducts;
-        private System.Windows.Forms.BindingSource _bsProducts;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn isDiscontinuedDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        #region Private Members
+
+        private void DeleteProduct ( Product product )
+        {
+            if (MessageBox.Show(this, $"Are you sure you want to delete '{product.Name}'?",
+                                "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            try
+            {
+                _database.Remove(product.Id);
+                UpdateList();
+            } catch (Exception ex)
+            {
+                DisplayError(ex.Message, "Delete Failed");
+            }
+        }
+
+        private void EditProduct ( Product product )
+        {
+            var child = new ProductDetailForm("Product Details");
+            child.Product = product;
+
+            do
+            {
+                if (child.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                try
+                {
+                    _database.Update(child.Product);
+                    UpdateList();
+                    return;
+                } catch (Exception ex)
+                {
+                    DisplayError(ex.Message, "Update Failed");
+                }
+            } while (true);
+        }
+
+        private Product GetSelectedProduct ()
+        {
+            if (_gridProducts.SelectedRows.Count > 0)
+                return _gridProducts.SelectedRows[0].DataBoundItem as Product;
+
+            return null;
+        }
+
+        private void UpdateList ()
+        {
+            try
+            {
+                _bsProducts.DataSource = _database.GetAll().OrderBy(x => x.Name);
+            } catch (Exception ex)
+            {
+                DisplayError(ex.Message, "Retrival Failed");
+            }
+        }
+
+        private string GetConnectionString ( string name ) => Program.Configuration.GetConnectionString(name);
+
+        private readonly IProductDatabase _database;
+
+        #endregion
     }
 }

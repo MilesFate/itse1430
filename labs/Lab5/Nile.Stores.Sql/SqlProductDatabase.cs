@@ -15,79 +15,24 @@ namespace Nile.Stores.Sql
     {
         private readonly string _connectionString;
 
+        #region SQL 
+
         public SqlProductDatabase (string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        protected override Product AddCore ( Product product )
+        private SqlConnection OpenConnection ()
         {
-            using (var conn = OpenConnection())
-            {
-                var cmd = new SqlCommand("AddProduct", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            var conn = new SqlConnection(_connectionString);
+            conn.Open();
 
-                cmd.Parameters.AddWithValue("@name", product.Name);
-                cmd.Parameters.AddWithValue("@price", product.Price);
-                cmd.Parameters.AddWithValue("@description", product.Description);
-                cmd.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
-
-                //Get movie ID as result
-                object result = cmd.ExecuteScalar();
-                product.Id = Convert.ToInt32(result);
-            }
-
-            return product;
+            return conn;
         }
 
-        protected override Product FindByName ( string name )
-        {
-            var products = GetAll();
+        #endregion
 
-            foreach (Product product in products)
-            {
-                if (product.Name.Equals(name))
-                {
-                    return new Product {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Price = product.Price,
-                        IsDiscontinued = product.IsDiscontinued,
-                    };
-                }
-            }
-
-            return null;
-        }
-
-        protected override IEnumerable<Product> GetAllCore ()
-        {
-            var ds = new DataSet();
-
-            using (var conn = OpenConnection())
-            {
-                var cmd = new SqlCommand("GetAllProducts", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-                var adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(ds);
-            }
-
-            var table = ds.Tables.OfType<DataTable>().FirstOrDefault();
-            if (table != null)
-            {
-                foreach (var row in table.Rows.OfType<DataRow>())
-                {
-                    yield return new Product() {
-                        Id = row.Field<int>("Id"),
-                        Name = row.Field<string>("Name"),
-                        Price = row.Field<decimal>("Price"),
-                        Description = row.Field<string>("Description"),
-                        IsDiscontinued = row.Field<bool>("IsDiscontinued"),
-                    };
-                }
-            }
-        }
+        #region Cores
 
         protected override Product GetCore ( int id )
         {
@@ -112,24 +57,58 @@ namespace Nile.Stores.Sql
                     }
                 }
             }
-
             return null;
         }
-        
-        protected override void RemoveCore ( int id )
+
+        protected override IEnumerable<Product> GetAllCore ()
         {
+            var dataSet = new DataSet();
+
             using (var conn = OpenConnection())
             {
-                var cmd = new SqlCommand("DeleteProduct", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                var cmd = new SqlCommand("GetAllProducts", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@id", id);
+                var adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dataSet);
+            }
 
-                cmd.ExecuteNonQuery();
+            var table = dataSet.Tables.OfType<DataTable>().FirstOrDefault();
+            if (table != null)
+            {
+                foreach (var row in table.Rows.OfType<DataRow>())
+                {
+                    yield return new Product() {
+                        Id = row.Field<int>("Id"),
+                        Name = row.Field<string>("Name"),
+                        Price = row.Field<decimal>("Price"),
+                        Description = row.Field<string>("Description"),
+                        IsDiscontinued = row.Field<bool>("IsDiscontinued"),
+                    };
+                }
             }
         }
 
-        protected override Product UpdateCore ( Product existing, Product newItem )
+        protected override Product AddCore ( Product product )
+        {
+            using (var conn = OpenConnection())
+            {
+                var cmd = new SqlCommand("AddProduct", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@name", product.Name);
+                cmd.Parameters.AddWithValue("@price", product.Price);
+                cmd.Parameters.AddWithValue("@description", product.Description);
+                cmd.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
+
+                //Get movie ID as result
+                object result = cmd.ExecuteScalar();
+                product.Id = Convert.ToInt32(result);
+            }
+            return product;
+        }
+
+                protected override Product UpdateCore ( Product existing, Product newItem )
         {
             using (var conn = OpenConnection())
             {
@@ -144,16 +123,41 @@ namespace Nile.Stores.Sql
 
                 cmd.ExecuteNonQuery();
             }
-
             return newItem;
         }
-
-        private SqlConnection OpenConnection ()
+      
+        protected override void RemoveCore ( int id )
         {
-            var conn = new SqlConnection(_connectionString);
-            conn.Open();
+            using (var conn = OpenConnection())
+            {
+                var cmd = new SqlCommand("DeleteProduct", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            return conn;
+                cmd.Parameters.AddWithValue("@id", id);
+
+                cmd.ExecuteNonQuery();
+            }
         }
+
+        #endregion
+
+        protected override Product FindByName ( string name )
+        {
+            var products = GetAll();
+
+            foreach (Product product in products)
+            {
+                if (product.Name.Equals(name))
+                {
+                    return new Product {
+                        Id = product.Id,
+                        Name = product.Name,
+                        Price = product.Price,
+                        IsDiscontinued = product.IsDiscontinued,
+                    };
+                }
+            }
+            return null;
+        }      
     }
 }
