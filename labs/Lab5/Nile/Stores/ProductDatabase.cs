@@ -52,7 +52,7 @@ namespace Nile.Stores
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
 
-            RemoveCore(id);
+            DeleteCore(id);
         }
         
         /// <summary>Updates a product.</summary>
@@ -83,7 +83,7 @@ namespace Nile.Stores
 
         protected abstract IEnumerable<Product> GetAllCore();
 
-        protected abstract void RemoveCore( int id );
+        protected abstract void DeleteCore( int id );
 
         protected abstract Product UpdateCore( Product existing, Product newItem );
 

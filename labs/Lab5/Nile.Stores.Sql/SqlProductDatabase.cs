@@ -1,7 +1,8 @@
 ﻿/*
- * Jett Smith
- * ITSE 1430
- */
+* Luisalberto Castaneda
+* 12/07/2021
+* ITSE 1430
+*/
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -108,7 +109,7 @@ namespace Nile.Stores.Sql
             return product;
         }
 
-                protected override Product UpdateCore ( Product existing, Product newItem )
+        protected override Product UpdateCore ( Product existing, Product newItem )
         {
             using (var conn = OpenConnection())
             {
@@ -126,7 +127,7 @@ namespace Nile.Stores.Sql
             return newItem;
         }
       
-        protected override void RemoveCore ( int id )
+        protected override void DeleteCore ( int id )
         {
             using (var conn = OpenConnection())
             {

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\..\Desktop\bruh\itse1430\labs\Lab5\Nile.Stores.Sql\Nile.Stores.Sql.csproj" />
+    <ProjectReference Include="..\Nile.Stores.Sql\Nile.Stores.Sql.csproj" />
     <ProjectReference Include="..\NileDatabase\NileDatabase.sqlproj" />
     <ProjectReference Include="..\Nile\Nile.csproj" />
 
