@@ -1,5 +1,5 @@
 ﻿/*
- * Jett Smith
+ * 
  * ITSE 1430
  */
 using System;
