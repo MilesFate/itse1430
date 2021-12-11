@@ -15,12 +15,12 @@ namespace Nile
     {
         public static IEnumerable<ValidationResult> TryValidate ( IValidatableObject instance )
         {
-            var errors = new List<ValidationResult>();
+            var error = new List<ValidationResult>();
             var context = new ValidationContext(instance);
 
-            Validator.TryValidateObject(instance, context, errors, true);
+            Validator.TryValidateObject(instance, context, error, true);
 
-            return errors;
+            return error;
         }
 
         public static bool TryValidate ( IValidatableObject instance, out string error )

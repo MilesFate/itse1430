@@ -14,10 +14,10 @@ namespace Nile.Stores.Sql
 {
     public class SqlProductDatabase : ProductDatabase
     {
-        private readonly string _connectionString;
 
         #region SQL 
-
+        
+        private readonly string _connectionString;
         public SqlProductDatabase (string connectionString)
         {
             _connectionString = connectionString;
@@ -30,7 +30,6 @@ namespace Nile.Stores.Sql
 
             return conn;
         }
-
         #endregion
 
         #region Cores
@@ -41,7 +40,6 @@ namespace Nile.Stores.Sql
             {
                 var command = new SqlCommand("GetProduct", conn);
                 command.CommandType = CommandType.StoredProcedure;
-
                 command.Parameters.AddWithValue("@id", id);
 
                 using (var reader = command.ExecuteReader())
@@ -73,7 +71,6 @@ namespace Nile.Stores.Sql
                 var adapter = new SqlDataAdapter(command);
                 adapter.Fill(data);
             }
-
             var table = data.Tables.OfType<DataTable>().FirstOrDefault();
 
             if (table != null)
@@ -135,9 +132,9 @@ namespace Nile.Stores.Sql
                 cmd.ExecuteNonQuery();
             }
         }
-
         #endregion
 
+        #region Find By
         protected override Product FindByName ( string name )
         {
             var products = GetAll();
@@ -156,6 +153,6 @@ namespace Nile.Stores.Sql
             }
             return null;
         }
-              
+        #endregion
     }
 }
