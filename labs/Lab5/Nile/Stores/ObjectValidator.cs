@@ -1,14 +1,13 @@
- /*
- * Luisalberto Castaneda
- * 12/07/2021
- * ITSE 1430
- */
+/*
+* Luisalberto Castaneda
+* 12/07/2021
+* ITSE 1430
+*/
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nile
 {

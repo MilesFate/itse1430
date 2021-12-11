@@ -39,12 +39,12 @@ namespace Nile.Stores.Sql
         {
             using (var conn = OpenConnection())
             {
-                var cmd = new SqlCommand("GetProduct", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("GetProduct", conn);
+                command.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@id", id);
 
-                using (var reader = cmd.ExecuteReader())
+                using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
@@ -67,10 +67,10 @@ namespace Nile.Stores.Sql
 
             using (var conn = OpenConnection())
             {
-                var cmd = new SqlCommand("GetAllProducts", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("GetAllProducts", conn);
+                command.CommandType = CommandType.StoredProcedure;
 
-                var adapter = new SqlDataAdapter(cmd);
+                var adapter = new SqlDataAdapter(command);
                 adapter.Fill(dataSet);
             }
 
@@ -94,15 +94,15 @@ namespace Nile.Stores.Sql
         {
             using (var conn = OpenConnection())
             {
-                var cmd = new SqlCommand("AddProduct", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("AddProduct", conn);
+                command.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@name", product.Name);
-                cmd.Parameters.AddWithValue("@price", product.Price);
-                cmd.Parameters.AddWithValue("@description", product.Description);
-                cmd.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
+                command.Parameters.AddWithValue("@name", product.Name);
+                command.Parameters.AddWithValue("@price", product.Price);
+                command.Parameters.AddWithValue("@description", product.Description);
+                command.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
 
-                object result = cmd.ExecuteScalar();
+                object result = command.ExecuteScalar();
                 product.Id = Convert.ToInt32(result);
             }
             return product;
@@ -112,16 +112,16 @@ namespace Nile.Stores.Sql
         {
             using (var conn = OpenConnection())
             {
-                var cmd = new SqlCommand("UpdateProduct", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("UpdateProduct", conn);
+                command.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@id", existing.Id);
-                cmd.Parameters.AddWithValue("@name", product.Name);
-                cmd.Parameters.AddWithValue("@price", product.Price);
-                cmd.Parameters.AddWithValue("@description", product.Description);
-                cmd.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
+                command.Parameters.AddWithValue("@id", existing.Id);
+                command.Parameters.AddWithValue("@name", product.Name);
+                command.Parameters.AddWithValue("@price", product.Price);
+                command.Parameters.AddWithValue("@description", product.Description);
+                command.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
 
-                cmd.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
             return product;
         }
@@ -130,7 +130,7 @@ namespace Nile.Stores.Sql
         {
             using (var conn = OpenConnection())
             {
-                var cmd = new SqlCommand("DeleteProduct", conn);
+                var cmd = new SqlCommand("RemoveProduct", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@id", id);

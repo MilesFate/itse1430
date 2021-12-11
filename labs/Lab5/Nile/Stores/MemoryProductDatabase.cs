@@ -3,6 +3,7 @@
  * 12/07/2021
  * ITSE 1430
  */
+
 using System;
 using System.Collections.Generic;
 
@@ -58,7 +59,6 @@ namespace Nile.Stores
         /// <returns>The updated product.</returns>
         protected override Product UpdateCore ( Product existing, Product product )
         {
-            //Replace 
             existing = FindProduct(product.Id);
             _products.Remove(existing);
             
@@ -80,7 +80,6 @@ namespace Nile.Stores
             return newProduct;
         }
 
-        //Find a product by ID
         private Product FindProduct ( int id )
         {
             foreach (var product in _products)
@@ -88,7 +87,6 @@ namespace Nile.Stores
                 if (product.Id == id)
                     return product;
             };
-
             return null;
         }
 
