@@ -89,7 +89,7 @@ namespace Nile.Windows
             this.labelProductName.Name = "labelProductName";
             this.labelProductName.Size = new System.Drawing.Size(316, 20);
             this.labelProductName.TabIndex = 19;
-            this.labelProductName.Text = "Product Name";
+            this.labelProductName.Text = "Nile Winform";
             this.labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelVersion
@@ -125,7 +125,7 @@ namespace Nile.Windows
             this.labelCompanyName.Name = "labelCompanyName";
             this.labelCompanyName.Size = new System.Drawing.Size(316, 20);
             this.labelCompanyName.TabIndex = 22;
-            this.labelCompanyName.Text = "Company Name";
+            this.labelCompanyName.Text = "Itse1430";
             this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxDescription
@@ -140,7 +140,7 @@ namespace Nile.Windows
             this.textBoxDescription.Size = new System.Drawing.Size(316, 147);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
-            this.textBoxDescription.Text = "Description";
+            this.textBoxDescription.Text = "Nile SQL data base";
             // 
             // okButton
             // 

@@ -23,9 +23,8 @@ namespace Nile.Stores
 
             var existing = FindByName(product.Name);
             if (existing != null)
-                throw new InvalidOperationException("Product must be unique");
+                throw new InvalidOperationException("Required Product to unique");
 
-            //Emulate database by storing copy
             return AddCore(product);
         }
 
@@ -34,7 +33,7 @@ namespace Nile.Stores
         public Product Get ( int id )
         {
             if (id <= 0)
-                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(id));
 
             return GetCore(id);
         }
@@ -51,9 +50,9 @@ namespace Nile.Stores
         public void Delete ( int id )
         {
             if (id <= 0)
-                throw new ArgumentOutOfRangeException(nameof(id), "Id must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(id));
 
-            DeleteCore(id);
+            RemoveCore(id);
         }
         
         /// <summary>Updates a product.</summary>
@@ -62,18 +61,17 @@ namespace Nile.Stores
         public Product Update ( Product product )
         {
             if (product.Id <= 0)
-                throw new ArgumentOutOfRangeException(nameof(product.Id), "Id must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(product.Id));
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
 
             ObjectValidator.Validate(product);
 
-            //Get existing product
             var existing = GetCore(product.Id);
 
             var dup = FindByName(product.Name);
             if (dup != null && dup.Id != product.Id)
-                throw new InvalidOperationException("Product must be unique");
+                throw new InvalidOperationException("Required Product to unique");
 
             return UpdateCore(existing, product);
         }
@@ -84,7 +82,7 @@ namespace Nile.Stores
 
         protected abstract IEnumerable<Product> GetAllCore();
 
-        protected abstract void DeleteCore( int id );
+        protected abstract void RemoveCore( int id );
 
         protected abstract Product UpdateCore( Product existing, Product newItem );
 

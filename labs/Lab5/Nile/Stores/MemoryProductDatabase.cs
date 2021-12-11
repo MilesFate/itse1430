@@ -47,7 +47,7 @@ namespace Nile.Stores
 
         /// <summary>Removes the product.</summary>
         /// <param name="product">The product to remove.</param>
-        protected override void DeleteCore ( int id )
+        protected override void RemoveCore ( int id )
         {
             var product = FindProduct(id);
             if (product != null)
@@ -90,7 +90,7 @@ namespace Nile.Stores
             return null;
         }
 
-        protected override Product FindByName ( string name ) => throw new NotImplementedException();
+        protected override Product FindByName ( string name ) => throw new ArgumentException();
 
         private List<Product> _products = new List<Product>();
         private int _nextId = 1;

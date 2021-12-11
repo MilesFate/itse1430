@@ -63,7 +63,7 @@ namespace Nile.Stores.Sql
 
         protected override IEnumerable<Product> GetAllCore ()
         {
-            var dataSet = new DataSet();
+            var data = new DataSet();
 
             using (var conn = OpenConnection())
             {
@@ -71,10 +71,11 @@ namespace Nile.Stores.Sql
                 command.CommandType = CommandType.StoredProcedure;
 
                 var adapter = new SqlDataAdapter(command);
-                adapter.Fill(dataSet);
+                adapter.Fill(data);
             }
 
-            var table = dataSet.Tables.OfType<DataTable>().FirstOrDefault();
+            var table = data.Tables.OfType<DataTable>().FirstOrDefault();
+
             if (table != null)
             {
                 foreach (var row in table.Rows.OfType<DataRow>())
@@ -96,7 +97,6 @@ namespace Nile.Stores.Sql
             {
                 var command = new SqlCommand("AddProduct", conn);
                 command.CommandType = CommandType.StoredProcedure;
-
                 command.Parameters.AddWithValue("@name", product.Name);
                 command.Parameters.AddWithValue("@price", product.Price);
                 command.Parameters.AddWithValue("@description", product.Description);
@@ -114,7 +114,6 @@ namespace Nile.Stores.Sql
             {
                 var command = new SqlCommand("UpdateProduct", conn);
                 command.CommandType = CommandType.StoredProcedure;
-
                 command.Parameters.AddWithValue("@id", existing.Id);
                 command.Parameters.AddWithValue("@name", product.Name);
                 command.Parameters.AddWithValue("@price", product.Price);
@@ -126,13 +125,12 @@ namespace Nile.Stores.Sql
             return product;
         }
       
-        protected override void DeleteCore ( int id )
+        protected override void RemoveCore ( int id )
         {
             using (var conn = OpenConnection())
             {
                 var cmd = new SqlCommand("RemoveProduct", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.ExecuteNonQuery();
             }
@@ -157,6 +155,7 @@ namespace Nile.Stores.Sql
                 }
             }
             return null;
-        }      
+        }
+              
     }
 }
